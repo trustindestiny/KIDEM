@@ -153,7 +153,7 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
    </div>
   </div>
   <div class="searchrow">
-   <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="name">İsim (A → Z)</option></select>
+   <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="birthday">Doğum günü yaklaşanlar</option><option value="name">İsim (A → Z)</option></select>
    <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm personel</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdem düşümü olanlar</option><option value="archived">Arşivdekiler</option></select>
   </div>
   <div class="tablewrap">
@@ -306,6 +306,7 @@ function birthdayInfo(){
  }
  $('birthdaySub').textContent='';
 }
+function nextBirthdayDate(p){if(!p.birthday)return null;const b=localDate(p.birthday);if(!b)return null;const now=today();let d=new Date(now.getFullYear(),b.getMonth(),b.getDate(),12);if(b.getMonth()===1&&b.getDate()===29&&d.getMonth()!==1)d=new Date(now.getFullYear(),1,28,12);if(d<now){d=new Date(now.getFullYear()+1,b.getMonth(),b.getDate(),12);if(b.getMonth()===1&&b.getDate()===29&&d.getMonth()!==1)d=new Date(now.getFullYear()+1,1,28,12)}return d}
 function filteredPeople(){
  const sort=$('sortSelect').value,filter=$('filterSelect').value;
  let a=people.filter(p=>{
@@ -314,7 +315,7 @@ function filteredPeople(){
   const done=countdownDays(p)===0;
   return filter==='all'||(filter==='active'&&!done)||(filter==='complete'&&done)||(filter==='deductions'&&p.deductions.length);
  });
- a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
+ a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='birthday'?((nextBirthdayDate(x)?.getTime()??Infinity)-(nextBirthdayDate(y)?.getTime()??Infinity))||x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
  return a
 }
 function render(){
