@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#123b55">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Kıdem">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <meta name="description" content="Anestezi ve Reanimasyon ekibi için kıdem ve beş yıllık geri sayım takip uygulaması.">
 <title>Kıdem | Anestezi ve Reanimasyon</title>
 <link rel="manifest" href="./manifest.json">
@@ -18,9 +22,29 @@ main{max-width:1380px;padding:18px 20px 42px;margin:auto}.birthday{display:none;
 .tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}thead th{text-align:left;padding:9px 12px;background:#f6f9fa;color:#5c717c;font-size:10px;text-transform:uppercase;letter-spacing:.55px;font-weight:750;border-bottom:1px solid var(--line)}tbody td{padding:7px 12px;border-bottom:1px solid #e9eff1;vertical-align:middle;font-size:12px}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfdfd}.namecell{font-weight:750;font-size:12px;overflow-wrap:anywhere}.startdate{white-space:nowrap;color:#4d6571;font-variant-numeric:tabular-nums}.tenure{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}.subvalue{display:block;color:#71848e;font-size:10px;font-weight:450;margin-top:1px}.remaining{white-space:nowrap;font-variant-numeric:tabular-nums}.remaining.done{color:#14755f;font-weight:750}.tools{display:flex;align-items:center;justify-content:flex-end;gap:4px}.iconbtn{border:1px solid transparent;background:transparent;color:#4b6572;border-radius:8px;width:30px;height:30px;display:grid;place-items:center}.iconbtn:hover{background:#edf4f7;border-color:#d4e1e7}.iconbtn svg{width:16px;height:16px}.iconbtn.info{color:var(--navy);background:#eef5f8;border-color:#dbe9ef}.iconbtn.remove{color:#ac3030}.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px}.tablefoot{border-top:1px solid var(--line);padding:10px 18px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .mobile-list{display:none;padding:8px;gap:7px}.personcard{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff}.personcardtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.personcard .namecell{font-size:13px}.personcard .startdate{font-size:11px;margin-top:2px}.personstats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.miniStat{border-radius:8px;background:#f5f8f9;padding:8px}.miniStat label{display:block;color:var(--muted);font-size:10px;margin-bottom:2px}.miniStat strong{font-size:12px;font-variant-numeric:tabular-nums}.mobiletools{display:flex;gap:4px}
 .modalback{display:none;position:fixed;inset:0;background:#0b2334a8;z-index:20;padding:18px;align-items:center;justify-content:center}.modalback.open{display:flex}.modal{width:min(620px,100%);max-height:min(88dvh,850px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 22px 70px #06172450}.modalhead{padding:17px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:1}.modalhead h2{margin:0;font-size:18px}.modalhead p{margin:3px 0 0;color:var(--muted);font-size:11px}.closebtn{border:0;background:#f1f5f6;border-radius:8px;width:32px;height:32px;font-size:22px;color:#46606d;line-height:1}.modalbody{padding:18px 19px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;padding:13px 19px;border-top:1px solid var(--line);background:#fbfdfd;position:sticky;bottom:0}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:750;color:#506672}.field input,.field select,.field textarea{width:100%;border:1px solid #ccd9df;border-radius:9px;padding:9px 10px;color:var(--ink);background:#fff;min-height:38px}.field textarea{min-height:66px;resize:vertical}.helper{font-size:10px;color:var(--muted);margin-top:2px}.sectionrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px}.sectionrow h3{margin:0;font-size:13px}.infochips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}.chip{border-radius:20px;padding:5px 9px;background:#edf4f7;color:#274c5e;font-size:11px;font-weight:650}.deduction{border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:8px}.deductiontop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.deductiontitle{font-weight:750;font-size:12px;overflow-wrap:anywhere}.deductionmeta{font-size:10px;color:var(--muted);margin-top:3px}.deductiondesc{font-size:11px;color:#3d5662;margin-top:6px;overflow-wrap:anywhere}.durationpill{background:#f0f5f6;border-radius:7px;padding:5px 7px;font-size:11px;font-weight:750;white-space:nowrap}.deductiontools{display:flex;gap:4px;margin-top:7px}.notice{font-size:11px;color:#5e727d;background:#f4f8f9;border:1px solid #e3ebee;border-radius:9px;padding:9px 10px;margin-top:12px}.toast{position:fixed;z-index:50;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#14394f;color:#fff;padding:11px 16px;border-radius:11px;box-shadow:0 5px 25px #071e2b30;font-size:12px;transition:all .2s;max-width:calc(100% - 30px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}.fileinput{display:none}
-@media(min-width:1050px){th:nth-child(1){width:29%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th:nth-child(4){width:19%}th:nth-child(5){width:17%}}
-@media(max-width:760px){.topbar{padding:15px 14px}.brandicon{width:42px;height:42px}.brand h1{font-size:20px}.brand p{font-size:11px}.datebadge{font-size:10px;max-width:100px;white-space:normal}.toprow{gap:10px}main{padding:12px 10px 30px}.stats{gap:7px}.stat{padding:10px 9px;gap:7px;border-radius:10px;display:block}.staticon{height:28px;width:28px;margin-bottom:7px}.staticon svg{width:16px;height:16px}.statlabel{font-size:9px;line-height:1.25}.statvalue{font-size:17px}.panelhead{padding:12px;align-items:flex-start}.paneltitle{font-size:14px}.subline{font-size:10px}.actions{gap:5px}.btn{padding:8px 9px;font-size:11px}.searchrow{padding:10px 12px;flex-wrap:wrap}.searchwrap{flex-basis:100%}.searchrow select{flex:1;max-width:none}.tablewrap{display:none}.mobile-list{display:grid}.tablefoot{padding:9px 12px;font-size:10px}.fieldgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modalback{padding:9px}.modal{max-height:92dvh;border-radius:13px}.modalhead,.modalbody{padding:14px}.modalfoot{padding:11px 14px}.birthday{padding:9px 10px}.birthday .names{font-size:12px}}
-@media(max-width:380px){.brand p{max-width:195px}.statvalue{font-size:15px}.actions .btn span{display:none}.actions .btn{width:36px;height:36px;padding:0}.panelhead .actions .btn.primary{width:auto;padding:8px 9px}.panelhead .actions .btn.primary span{display:inline}}
+table{table-layout:fixed;width:100%}
+th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th:nth-child(4){width:22%}th:nth-child(5){width:13%}
+.birthline{display:block;color:#627b88;font-size:10px;font-weight:500;line-height:1.25;margin-top:2px;white-space:nowrap}
+.tools{gap:2px}
+.iconbtn{width:27px;height:27px;flex-shrink:0}.iconbtn svg{width:15px;height:15px}
+@media(max-width:760px){
+ .topbar{padding:12px}.brandicon{width:38px;height:38px}.brand h1{font-size:17px}.brand p{font-size:10px}.datebadge{font-size:9px;max-width:90px;white-space:normal}.toprow{gap:8px}
+ main{padding:9px 7px 24px}.stats{gap:5px}.stat{padding:8px 7px;gap:5px;border-radius:9px;display:block}.staticon{height:24px;width:24px;margin-bottom:5px}.staticon svg{width:14px;height:14px}.statlabel{font-size:8px;line-height:1.25}.statvalue{font-size:15px}
+ .panelhead{padding:10px 8px;align-items:center}.paneltitle{font-size:13px}.subline{font-size:9px}.actions{gap:4px}.btn{padding:7px;font-size:10px}
+ .searchrow{padding:7px 8px;gap:5px;flex-wrap:nowrap}.searchrow select{flex:1;min-width:0;max-width:none;padding:0 5px;font-size:10px}
+ .tablewrap{display:block;overflow:visible}.mobile-list{display:none!important}
+ table{table-layout:fixed;width:100%}thead th{padding:7px 3px;font-size:8px;letter-spacing:0;line-height:1.15}tbody td{padding:6px 3px;font-size:9px;overflow:hidden}
+ th:nth-child(1){width:31%}th:nth-child(2){width:15%}th:nth-child(3){width:21%}th:nth-child(4){width:21%}th:nth-child(5){width:12%}
+ .namecell{font-size:9px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.birthline{font-size:8px;line-height:1.1;white-space:nowrap}.subvalue{font-size:8px;line-height:1.1;white-space:nowrap}
+ .startdate{font-size:8px;white-space:nowrap}.tenure,.remaining{font-size:8px;white-space:nowrap;letter-spacing:-.2px}
+ .tools{gap:0;justify-content:flex-end}.iconbtn{width:18px;height:22px;border-radius:5px;padding:0}.iconbtn svg{width:12px;height:12px}
+ .tablefoot{padding:7px 8px;font-size:9px}.fieldgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modalback{padding:9px}.modal{max-height:92dvh;border-radius:13px}.modalhead,.modalbody{padding:14px}.modalfoot{padding:11px 14px}.birthday{padding:8px}.birthday .names{font-size:11px}.birthday-heading{font-size:12px}
+}
+@media(max-width:390px){
+ .brand p{max-width:180px}.statvalue{font-size:13px}.panelhead .actions .btn:not(.primary){width:30px;height:30px;padding:0}.panelhead .actions .btn span{display:none}.panelhead .actions .btn.primary{width:auto;padding:7px 8px}.panelhead .actions .btn.primary span{display:inline}
+ th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:21%}th:nth-child(4){width:22%}th:nth-child(5){width:12%}
+ .iconbtn{width:17px}.namecell{font-size:8.5px}.startdate,.tenure,.remaining{font-size:7.5px}
+}
 </style>
 </head>
 <body>
@@ -53,8 +77,7 @@ main{max-width:1380px;padding:18px 20px 42px;margin:auto}.birthday{display:none;
    </div>
   </div>
   <div class="searchrow">
-   <div class="searchwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input type="search" id="searchInput" placeholder="Personel ara…" aria-label="Personel ara"></div>
-   <select id="sortSelect" aria-label="Sıralama"><option value="start">Başlama tarihi (eski → yeni)</option><option value="net">Net kıdem (yüksek → düşük)</option><option value="name">İsim (A → Z)</option></select>
+   <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="name">İsim (A → Z)</option></select>
    <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm personel</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdem düşümü olanlar</option></select>
   </div>
   <div class="tablewrap">
@@ -162,12 +185,10 @@ function birthdayInfo(){
  }
 }
 function filteredPeople(){
- const q=$('searchInput').value.trim().toLocaleLowerCase('tr-TR'),sort=$('sortSelect').value,filter=$('filterSelect').value;
+ const sort=$('sortSelect').value,filter=$('filterSelect').value;
  let a=people.filter(p=>{
-  const matches=!q||p.name.toLocaleLowerCase('tr-TR').includes(q);
   const done=countdownDays(p)===0;
-  const fits=filter==='all'||(filter==='active'&&!done)||(filter==='complete'&&done)||(filter==='deductions'&&p.deductions.length);
-  return matches&&fits;
+  return filter==='all'||(filter==='active'&&!done)||(filter==='complete'&&done)||(filter==='deductions'&&p.deductions.length);
  });
  a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
  return a
@@ -183,12 +204,11 @@ function render(){
  $('emptyState').classList.toggle('hidden',list.length>0);
  $('staffTableBody').innerHTML=list.map(p=>{
   const done=countdownDays(p)===0;
-  return '<tr><td><div class="namecell">'+escapeHtml(p.name)+'</div>'+(p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'')+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span><span class="subvalue">Net kıdem</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span></td><td><div class="tools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' bilgisi" title="Bilgi ve mazeretler">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle" title="Personeli düzenle">'+icon('edit')+'</button><button class="iconbtn remove" data-action="delete" data-id="'+p.id+'" aria-label="Sil" title="Personeli sil">'+icon('trash')+'</button></div></td></tr>'
+  const birthdayLine=p.birthday?'<span class="birthline">🎁 '+dateText(p.birthday)+'</span>':'';
+  const deductionsLine=p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'';
+  return '<tr><td><div class="namecell">'+escapeHtml(p.name)+'</div>'+birthdayLine+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span></td><td><div class="tools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' bilgisi" title="Bilgi ve mazeretler">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle" title="Personeli düzenle">'+icon('edit')+'</button></div></td></tr>'
  }).join('');
- $('mobileList').innerHTML=list.map(p=>{
-  const done=countdownDays(p)===0;
-  return '<article class="personcard"><div class="personcardtop"><div><div class="namecell">'+escapeHtml(p.name)+'</div><div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'')+'</div><div class="mobiletools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="Bilgi">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle">'+icon('edit')+'</button><button class="iconbtn remove" data-action="delete" data-id="'+p.id+'" aria-label="Sil">'+icon('trash')+'</button></div></div><div class="personstats"><div class="miniStat"><label>Net kıdem</label><strong>'+durationText(netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong class="'+(done?'remaining done':'remaining')+'">'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div></article>'
- }).join('');
+ $('mobileList').innerHTML='';
 }
 function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){ $('modalBack').classList.remove('open');document.body.style.overflow='';modalState={type:null,personId:null,deductionId:null};}
@@ -212,7 +232,7 @@ function openInfo(id){
  $('modalTitle').textContent=p.name;$('modalSubtitle').textContent='Personel bilgileri ve kıdem düşüm mazeretleri';
  const deductions=p.deductions.map(d=>'<div class="deduction"><div class="deductiontop"><div><div class="deductiontitle">'+escapeHtml(d.reason)+'</div><div class="deductionmeta">Kayıt tarihi: '+(d.createdAt?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d.createdAt)):'—')+'</div></div><div class="durationpill">'+durationText(durationDays(d))+'</div></div>'+(d.description?'<div class="deductiondesc">'+escapeHtml(d.description)+'</div>':'')+'<div class="deductiontools"><button class="btn small" data-modal-action="edit-deduction" data-deduction-id="'+d.id+'">'+icon('edit')+' Düzenle</button><button class="btn small danger" data-modal-action="delete-deduction" data-deduction-id="'+d.id+'">'+icon('trash')+' Sil</button></div></div>').join('');
  $('modalBody').innerHTML='<div class="infochips"><span class="chip">Başlangıç: '+dateText(p.start)+'</span>'+(p.birthday?'<span class="chip">Doğum tarihi: '+dateText(p.birthday)+'</span>':'<span class="chip">Doğum tarihi girilmemiş</span>')+'</div><div class="infochips"><span class="chip">Ham süre: '+durationText(elapsed(p))+'</span><span class="chip">Toplam düşüm: '+durationText(deductionTotal(p))+'</span><span class="chip">Net kıdem: '+durationText(netDays(p))+'</span></div><div class="sectionrow"><h3>Kıdem düşüm mazeretleri ('+p.deductions.length+')</h3><button class="btn primary small" data-modal-action="add-deduction">'+icon('plus')+' Kıdem düş</button></div>'+(deductions||'<div class="empty" style="padding:18px;border:1px dashed var(--line);border-radius:10px">Henüz kıdem düşüm kaydı eklenmemiş.</div>')+'<div class="notice">Ay = 30 gün, yıl = 365 gün olarak hesaplanır. 0 girilen süre alanları sıfır kalır. Her mazeret kaydı ayrı ayrı düzenlenebilir veya silinebilir.</div>';
- footerButtons([{text:'Kapat',action:'close'},{text:'Personeli düzenle',action:'edit-person',class:'primary'}]);openModal();
+ footerButtons([{text:'Personeli sil',action:'delete-person',class:'danger'},{text:'Kapat',action:'close'},{text:'Personeli düzenle',action:'edit-person',class:'primary'}]);openModal();
 }
 function openDeductionForm(personId,deduction){
  const p=people.find(x=>x.id===personId);if(!p)return;
@@ -254,7 +274,7 @@ $('addPersonBtn').addEventListener('click',()=>openPersonForm(null));
 $('exportBtn').addEventListener('click',exportData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importData(e.target.files[0]);e.target.value=''});
-['searchInput','sortSelect','filterSelect'].forEach(id=>$(id).addEventListener(id==='searchInput'?'input':'change',render));
+['sortSelect','filterSelect'].forEach(id=>$(id).addEventListener('change',render));
 document.addEventListener('click',e=>{
  const b=e.target.closest('[data-action]');if(b){handleAction(b.dataset.action,b.dataset.id);return}
  const m=e.target.closest('[data-modal-action]');if(!m)return;
@@ -269,6 +289,11 @@ document.addEventListener('click',e=>{
   closeModal();
  }
  if(a==='edit-person'){closeModal();openPersonForm(p)}
+ if(a==='delete-person'){
+  if(p&&confirm(p.name+' personelini ve bu personele ait tüm kıdem düşüm kayıtlarını silmek istiyor musunuz? Bu işlem geri alınamaz.')){
+   people=people.filter(x=>x.id!==p.id);save();closeModal();showToast('Personel silindi.');
+  }
+ }
  if(a==='add-deduction')openDeductionForm(modalState.personId,null);
  if(a==='edit-deduction'){const d=p&&p.deductions.find(x=>x.id===dId);if(d)openDeductionForm(p.id,d)}
  if(a==='delete-deduction'){
