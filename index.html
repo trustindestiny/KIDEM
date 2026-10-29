@@ -501,11 +501,12 @@ document.addEventListener('click',e=>{
   if(p){p.archived=false;save();closeModal();showToast('Personel yeniden aktifleştirildi.');}
  }
  if(a==='save-person'){
-  const name=$('personName').value.trim(),start=$('personStart').value,birthday=$('personBirthday').value;
+  const name=$('personName').value.trim(),start=$('personStart').value,birthday=$('personBirthday').value,graduationDate=$('personGraduationDate').value;
   if(!name||!start){alert('Ad soyad ve işe başlama tarihi zorunludur.');return}
   if(!localDate(start)||localDate(start)>today()){alert('İşe başlama tarihi geçerli ve bugün veya daha önce olmalıdır.');return}
   if(birthday&&!localDate(birthday)){alert('Doğum tarihini kontrol edin.');return}
-  if(modalState.personId){const old=findPerson(modalState.personId);if(old){old.name=name;old.start=start;old.birthday=birthday;save();showToast('Personel bilgileri güncellendi.')}}else{people.push({id:uid(),name,start,birthday,deductions:[]});save();showToast('Yeni personel eklendi.')}
+  if(graduationDate&&!localDate(graduationDate)){alert('Mezuniyet tarihini kontrol edin.');return}
+  if(modalState.personId){const old=findPerson(modalState.personId);if(old){const hadGraduation=!!old.graduationDate;old.name=name;old.start=start;old.birthday=birthday;old.graduationDate=graduationDate;if(graduationDate)old.archived=true;else if(hadGraduation)old.archived=false;save();showToast('Personel bilgileri güncellendi.')}}else{people.push({id:uid(),name,start,birthday,graduationDate,archived:!!graduationDate,deductions:[]});save();showToast(graduationDate?'Personel mezuniyet nedeniyle arşivlendi.':'Yeni personel eklendi.')}
   closeModal();
  }
  if(a==='edit-person'){closeModal();openPersonForm(p)}
