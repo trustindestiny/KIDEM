@@ -224,7 +224,7 @@ function loadData(){
  try{const v=JSON.parse(localStorage.getItem(STORE_KEY));if(v&&Array.isArray(v.people))return v.people.map(normalizePerson)}catch(e){}
  return seed.map(s=>({...s,id:uid(),birthday:'',deductions:[]}));
 }
-function normalizePerson(p){return {id:p.id||uid(),name:String(p.name||''),start:String(p.start||''),birthday:String(p.birthday||''),archived:!!p.archived,deductions:Array.isArray(p.deductions)?p.deductions.map(d=>({id:d.id||uid(),reason:String(d.reason||'Diğer'),description:String(d.description||''),years:nonneg(d.years),months:nonneg(d.months),days:nonneg(d.days),createdAt:d.createdAt||new Date().toISOString()})):[]}}
+function normalizePerson(p){return {id:p.id||uid(),name:String(p.name||''),start:String(p.start||''),birthday:String(p.birthday||''),graduationDate:String(p.graduationDate||''),archived:!!p.archived,deductions:Array.isArray(p.deductions)?p.deductions.map(d=>({id:d.id||uid(),reason:String(d.reason||'Diğer'),description:String(d.description||''),years:nonneg(d.years),months:nonneg(d.months),days:nonneg(d.days),createdAt:d.createdAt||new Date().toISOString()})):[]}}
 function nonneg(v){const n=Number(v);return Number.isFinite(n)&&n>0?Math.floor(n):0}
 function save(){localStorage.setItem(STORE_KEY,JSON.stringify({version:1,people:people}));render()}
 function localDate(iso){if(!iso)return null;const a=iso.split('-').map(Number);if(a.length!==3||!a[0]||!a[1]||!a[2])return null;return new Date(a[0],a[1]-1,a[2],12,0,0,0)}
