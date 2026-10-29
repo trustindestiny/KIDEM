@@ -565,8 +565,11 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10').catch(()=>{}));
 })();
 </script>
 </body>
 </html>
+<style>
+@media(max-width:760px){.tablewrap{display:none!important}.mobile-list{display:grid!important;grid-template-columns:minmax(0,1fr);min-width:0;overflow:visible}.personcard{min-width:0;width:100%;overflow-wrap:anywhere}.personcardtop>div{min-width:0;width:100%}.personcard .namecell{white-space:normal;overflow:visible;text-overflow:clip;max-width:100%;font-size:12px}.personcard .startdate{white-space:normal}.personstats{grid-template-columns:repeat(2,minmax(0,1fr))}.miniStat{min-width:0}.miniStat strong{overflow-wrap:anywhere}.panel,.view-panel,main{min-width:0;max-width:100%;overflow-x:clip}.searchrow{min-width:0}.searchwrap{min-width:0}.searchrow select{width:50%;}}
+</style>
