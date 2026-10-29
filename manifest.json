@@ -1,0 +1,19 @@
+{
+  "name": "Kıdem | Anestezi ve Reanimasyon",
+  "short_name": "Kıdem",
+  "description": "Personel kıdem, mazeret düşümü ve beş yıllık geri sayım takibi.",
+  "lang": "tr-TR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3f7f8",
+  "theme_color": "#123b55",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
