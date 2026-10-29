@@ -421,8 +421,8 @@ function field(label,id,value,type='text',opts={}){
 function openPersonForm(person){
  setBackButton(false);
  modalState={type:'person-form',personId:person?person.id:null,deductionId:null};
- $('modalTitle').textContent=person?'Personeli düzenle':'Yeni personel ekle';$('modalSubtitle').textContent=person?'İsim ve tarih bilgilerini güncelle.':'Ad, işe başlama tarihi ve doğum tarihini gir.';
- $('modalBody').innerHTML='<div class="fieldgrid">'+field('Adı ve soyadı','personName',person?person.name:'','text',{required:true,full:true})+field('İşe başlama tarihi','personStart',person?person.start:'','date',{required:true})+field('Doğum tarihi (isteğe bağlı)','personBirthday',person?person.birthday:'','date')+'</div><div class="notice">Doğum tarihi girildiğinde doğum gününden bir gün önce ve doğum gününde üst bölümde kırmızı pasta simgeli bildirim gösterilir.</div>';
+ $('modalTitle').textContent=person?'Personeli düzenle':'Yeni personel ekle';$('modalSubtitle').textContent=person?'İsim ve tarih bilgilerini güncelle.':'Ad, işe başlama tarihi, doğum ve mezuniyet tarihini gir.';
+ $('modalBody').innerHTML='<div class="fieldgrid">'+field('Adı ve soyadı','personName',person?person.name:'','text',{required:true,full:true})+field('İşe başlama tarihi','personStart',person?person.start:'','date',{required:true})+field('Doğum tarihi (isteğe bağlı)','personBirthday',person?person.birthday:'','date')+field('Resmî mezuniyet tarihi (isteğe bağlı)','personGraduationDate',person?person.graduationDate||'':'','date')+'</div><div class="notice">Resmî mezuniyet tarihi girildiğinde personel otomatik olarak arşive alınır. Mezuniyet tarihi silinirse personel yeniden aktif listeye döner. Kıdem düşüm kayıtları ve sayımlar korunur.</div>';
  footerButtons([{text:'Vazgeç',action:'close'},{text:person?'Değişiklikleri kaydet':'Personeli ekle',action:'save-person',class:'primary'}]);openModal();setTimeout(()=>$('personName').focus(),30);
 }
 function openPersonMenu(id){
