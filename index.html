@@ -16,7 +16,8 @@
 :root{color-scheme:light;--navy:#123b55;--navy2:#1e536d;--ink:#172b38;--muted:#607480;--line:#dce5e9;--paper:#f3f7f8;--white:#fff;--red:#c62828;--redbg:#fff0f0;--teal:#dff4ef;--shadow:0 8px 28px rgba(18,59,85,.08)}
 *{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.45}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #80c6df;outline-offset:2px}
 .topbar{background:linear-gradient(120deg,#102f45,#1d5870);color:#fff;padding:20px max(20px,calc((100% - 1380px)/2));box-shadow:0 4px 16px #123b5520}.brand{display:flex;align-items:center;gap:13px}.brandicon{height:48px;width:48px;border-radius:14px;background:#ffffff18;border:1px solid #ffffff33;display:grid;place-items:center;flex-shrink:0}.brandicon svg{width:30px;height:30px}.brand h1{font-size:clamp(20px,2.5vw,28px);line-height:1.2;margin:0;font-weight:750;letter-spacing:-.6px}.brand p{margin:4px 0 0;color:#d3e3eb;font-size:12px}.toprow{max-width:1380px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}.datebadge{font-variant-numeric:tabular-nums;color:#d3e3eb;text-align:right;font-size:12px;white-space:nowrap}
-main{max-width:1380px;padding:18px 20px 42px;margin:auto}.birthday{display:none;margin-bottom:14px;padding:10px 14px;border:1px solid #ffc7c7;border-radius:12px;background:var(--redbg);color:var(--red);align-items:flex-start;gap:10px}.birthday.show{display:flex}.birthday-symbol{font-size:23px;line-height:1.2;flex-shrink:0}.birthday strong{display:block;font-size:13px}.birthday .names{margin-top:2px;font-weight:650;overflow-wrap:anywhere}.birthday .tomorrow{font-size:11px;margin-top:2px;color:#a72525}
+main{max-width:1380px;padding:18px 20px 42px;margin:auto}.birthday{display:none;margin-bottom:14px;padding:10px 14px;border:1px solid #ffc7c7;border-radius:12px;background:var(--redbg);color:var(--red);align-items:flex-start;gap:10px}.birthday.show{display:flex}.birthday-symbol{font-size:23px;line-height:1.2;flex-shrink:0}.birthday strong{display:block;font-size:13px}.birthday-message{display:block;color:#b91c1c;font-weight:700;line-height:1.45;margin:1px 0}.birthday .tomorrow{display:none}
+.birthday .names{margin-top:2px;font-weight:650;overflow-wrap:anywhere}.birthday .tomorrow{font-size:11px;margin-top:2px;color:#a72525}
 .stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:14px}.stat{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:13px 16px;box-shadow:0 2px 7px #123b5505;display:flex;gap:12px;align-items:center;min-width:0}.stat-action{font:inherit;text-align:left;width:100%;color:var(--ink);cursor:pointer;transition:border-color .15s,background .15s}.stat-action:hover{border-color:#aac4d0;background:#fbfefe}.staticon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#eaf2f6;color:var(--navy);flex-shrink:0}.staticon svg{width:21px;height:21px}.statlabel{font-size:11px;color:var(--muted);margin-bottom:2px}.statvalue{font-weight:750;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}.target-date{display:block;margin-top:2px;font-size:9px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
 .panel{background:var(--white);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);overflow:hidden}.panelhead{padding:16px 18px 13px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}.paneltitle{margin:0;font-size:16px;letter-spacing:-.2px}.subline{font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.btn{border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink);padding:8px 11px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12px;font-weight:650;white-space:nowrap;transition:background .15s,border-color .15s}.btn:hover{background:#f3f7f8;border-color:#b7c8d1}.btn svg{width:15px;height:15px;flex-shrink:0}.btn.primary{background:var(--navy);border-color:var(--navy);color:white}.btn.primary:hover{background:var(--navy2)}.btn.danger{color:var(--red);border-color:#efcaca;background:#fffafa}.btn.ghost{background:transparent}.btn.small{padding:6px 8px;font-size:11px}.searchrow{display:flex;gap:8px;padding:12px 18px;align-items:center;border-bottom:1px solid var(--line)}.searchwrap{position:relative;flex:1;min-width:130px}.searchwrap svg{position:absolute;left:11px;top:10px;width:16px;height:16px;color:#718590}.searchwrap input{width:100%;height:36px;padding:0 12px 0 35px;border:1px solid var(--line);border-radius:9px;background:#fbfdfd;outline-offset:1px}.searchrow select{height:36px;max-width:210px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:0 9px;color:var(--ink);font-size:12px}
 .tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}thead th{text-align:left;padding:9px 12px;background:#f6f9fa;color:#5c717c;font-size:10px;text-transform:uppercase;letter-spacing:.55px;font-weight:750;border-bottom:1px solid var(--line)}tbody td{padding:7px 12px;border-bottom:1px solid #e9eff1;vertical-align:middle;font-size:12px}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfdfd}.namecell{font-weight:750;font-size:12px;overflow-wrap:anywhere}.startdate{white-space:nowrap;color:#4d6571;font-variant-numeric:tabular-nums}.tenure{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}.subvalue{display:block;color:#71848e;font-size:10px;font-weight:450;margin-top:1px}.remaining{white-space:nowrap;font-variant-numeric:tabular-nums}.remaining.done{color:#14755f;font-weight:750}.tools{display:flex;align-items:center;justify-content:flex-end;gap:4px}.iconbtn{border:1px solid transparent;background:transparent;color:#4b6572;border-radius:8px;width:30px;height:30px;display:grid;place-items:center}.iconbtn:hover{background:#edf4f7;border-color:#d4e1e7}.iconbtn svg{width:16px;height:16px}.iconbtn.info{color:var(--navy);background:#eef5f8;border-color:#dbe9ef}.iconbtn.remove{color:#ac3030}.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px}.tablefoot{border-top:1px solid var(--line);padding:10px 18px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -159,30 +160,52 @@ function icon(name){
 function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
 function birthdayInfo(){
- const now=today(), todayNames=[],tomorrowNames=[];
- for(const p of people){const b=localDate(p.birthday);if(!b)continue;
-  const isToday=b.getMonth()===now.getMonth()&&b.getDate()===now.getDate();
-  const next=new Date(now.getFullYear(),b.getMonth(),b.getDate(),12);
-  const tom=new Date(now);tom.setDate(now.getDate()+1);
-  const isTomorrow=b.getMonth()===tom.getMonth()&&b.getDate()===tom.getDate();
-  if(isToday)todayNames.push(p.name);if(isTomorrow)tomorrowNames.push(p.name);
+ const now=today();
+ const offsets=[
+  {days:7,label:'bir hafta sonra'},
+  {days:1,label:'yarın'},
+  {days:0,label:'bugün'}
+ ];
+ const notices=[];
+ function targetDay(offset){
+  const d=new Date(now);
+  d.setDate(d.getDate()+offset);
+  return d;
+ }
+ function possessive(name){
+  const letters=name.toLocaleLowerCase('tr-TR');
+  const vowels=letters.match(/[aeıioöuü]/g)||[];
+  const last=vowels.length?vowels[vowels.length-1]:'a';
+  const suffix=last==='a'||last==='ı'?'ın':last==='e'||last==='i'?'in':last==='o'||last==='u'?'un':'ün';
+  return name+"'"+suffix;
+ }
+ for(const offset of offsets){
+  const target=targetDay(offset.days);
+  const names=people.filter(p=>{
+   const b=localDate(p.birthday);
+   if(!b)return false;
+   if(b.getMonth()===target.getMonth()&&b.getDate()===target.getDate())return true;
+   // Leap-day birthdays are observed on February 28 in non-leap years.
+   return b.getMonth()===1&&b.getDate()===29&&target.getMonth()===1&&target.getDate()===28&&new Date(target.getFullYear(),1,29).getMonth()!==1;
+  }).map(p=>p.name);
+  if(!names.length)continue;
+  const subject=names.map(possessive).join(' ve ');
+  const suffix=names.length===1?' doğum günü ':' doğum günleri ';
+  notices.push(subject+suffix+offset.label+'.');
  }
  const banner=$('birthdayBanner');
- if(!todayNames.length&&!tomorrowNames.length){banner.classList.remove('show');return}
+ const list=$('birthdayNames');
+ list.replaceChildren();
+ if(!notices.length){banner.classList.remove('show');$('birthdayHeading').textContent='Doğum günü hatırlatmaları';$('birthdaySub').textContent='';return}
  banner.classList.add('show');
- if(todayNames.length&&tomorrowNames.length){
-  $('birthdayHeading').textContent='Bugün ve yarın doğum günü';
-  $('birthdayNames').textContent='Bugün: '+todayNames.join(' · ')+' | Yarın: '+tomorrowNames.join(' · ');
-  $('birthdaySub').textContent='🎂 Bugün ve yarın doğum günü olan personeller';
- }else if(todayNames.length){
-  $('birthdayHeading').textContent=todayNames.length===1?'Bugün doğum günü!':'Bugün doğum günleri!';
-  $('birthdayNames').textContent=todayNames.join(' · ');
-  $('birthdaySub').textContent='🎂 Bugün doğum günü olan personel';
- }else{
-  $('birthdayHeading').textContent=tomorrowNames.length===1?'Yarın doğum günü!':'Yarın doğum günleri!';
-  $('birthdayNames').textContent=tomorrowNames.join(' · ');
-  $('birthdaySub').textContent='🎂 Yarın doğum günü olan personel';
+ $('birthdayHeading').textContent='Doğum günü hatırlatmaları';
+ for(const message of notices){
+  const line=document.createElement('div');
+  line.className='birthday-message';
+  line.textContent=message;
+  list.appendChild(line);
  }
+ $('birthdaySub').textContent='';
 }
 function filteredPeople(){
  const sort=$('sortSelect').value,filter=$('filterSelect').value;
