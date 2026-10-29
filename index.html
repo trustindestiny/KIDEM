@@ -50,7 +50,7 @@ th:nth-child(1){width:34%}th:nth-child(2){width:15%}th:nth-child(3){width:18%}th
 /* App navigation and iOS safe-area refinement */
 .topbar{position:sticky;top:0;z-index:15;padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:13px}
 main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
-.main-tabs{display:grid;grid-template-columns:1fr 1fr 1.2fr .9fr;gap:7px;margin:0 0 14px;padding:5px;background:#e8eff2;border:1px solid #d8e4e9;border-radius:14px;position:relative}
+.main-tabs{display:grid;grid-template-columns:1fr 1.2fr .9fr;gap:7px;margin:0 0 14px;padding:5px;background:#e8eff2;border:1px solid #d8e4e9;border-radius:14px;position:relative}
 .main-tab{appearance:none;border:1px solid transparent;border-radius:10px;background:transparent;color:#536b77;padding:10px 9px;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;font-size:12px;font-weight:750;line-height:1.2}
 .main-tab.active{background:#fff;color:#123b55;border-color:#dce6ea;box-shadow:0 2px 6px #123b5512}
 .main-tab span:first-child{overflow-wrap:anywhere}
@@ -84,7 +84,7 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
  .topbar{padding-left:10px;padding-right:10px;padding-bottom:10px}
  .brand{gap:8px}.brandicon{width:34px;height:34px;border-radius:10px}.brandicon svg{width:24px;height:24px}.brand h1{font-size:15px}.brand p{font-size:9px}.datebadge{font-size:8px;max-width:76px}
  main{padding:10px 7px calc(22px + env(safe-area-inset-bottom,0px))}
- .main-tabs{grid-template-columns:1fr 1fr 1.15fr .9fr;gap:4px;padding:4px;border-radius:12px;margin-bottom:10px}
+ .main-tabs{grid-template-columns:1fr 1.2fr .9fr;gap:4px;padding:4px;border-radius:12px;margin-bottom:10px}
  .main-tab{padding:9px 4px;gap:4px;font-size:10px;flex-wrap:wrap;text-align:center;flex-direction:column;min-height:56px}
  .tab-count{font-size:9px;min-width:20px;padding:2px 5px}
  .birthday{padding:8px 9px;margin-bottom:10px}.birthday strong{font-size:12px}.birthday-message{font-size:11px}
@@ -136,7 +136,6 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
 <main>
  <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
   <button class="main-tab active" id="tab-staff" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Tüm Asistan Hekimler</span><span class="tab-count" id="tabStaffCount">17</span></button>
-  <button class="main-tab" id="tab-archive" type="button" role="tab" aria-selected="false" aria-controls="view-archive" data-tab="archive"><span>Arşivlenenler</span><span class="tab-count" id="tabArchiveCount">0</span></button>
   <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdeme Dahil Olmayan Süreler</span><span class="tab-count" id="tabDeductionCount">0</span></button>
   <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdayCount">0</span></button>
  </nav>
@@ -148,7 +147,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  <section class="view-panel active" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
  <section class="panel">
   <div class="panelhead">
-   <div><h2 class="paneltitle">Asistan Hekim</h2><div class="subline">Kıdem her gün otomatik hesaplanır. Mazeret kayıtları bilgi penceresindedir.</div></div>
+   <div><h2 class="paneltitle">Asistan Hekim</h2><div class="subline">Kıdem her gün otomatik hesaplanır.</div></div>
    <div class="actions">
     <button class="btn" id="exportBtn" title="Yedek al"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v4h14v-4"/></svg><span>Yedek al</span></button>
     <button class="btn" id="importBtn" title="Yedeği geri yükle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V3m-5 5 5-5 5 5"/><path d="M5 17v4h14v-4"/></svg><span>Yükle</span></button>
@@ -157,7 +156,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
   </div>
   <div class="searchrow">
    <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="birthday">Doğum günü yaklaşanlar</option><option value="name">İsim (A → Z)</option></select>
-   <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option></select>
+   <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option><option value="archived">Arşivlenenler</option></select>
   </div>
   <div class="tablewrap">
    <table><thead><tr><th>Asistan Hekim</th><th>Başlangıç tarihi</th><th>Net kıdem</th><th>5 yıla kalan</th></tr></thead><tbody id="staffTableBody"></tbody></table>
@@ -331,7 +330,6 @@ function render(){
  $('tabStaffCount').textContent=people.filter(p=>!p.archived).length;
  $('tabDeductionCount').textContent=totalDeductions();
  $('tabBirthdayCount').textContent=people.filter(p=>p.birthday&&!p.archived).length;
- $('tabArchiveCount').textContent=people.filter(p=>p.archived).length;
  birthdayInfo();
  renderDeductionRegister();
  renderBirthdaySchedule();
@@ -579,7 +577,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=11').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=12').catch(()=>{}));
 })();
 </script>
 </body>
