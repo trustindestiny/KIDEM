@@ -119,6 +119,8 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 .topbar{isolation:isolate}
 @media(max-width:760px){.brandicon-img{width:38px;height:38px;border-radius:11px}}
 
+thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-right:6px!important}
+@media(max-width:760px){thead th:nth-child(4),tbody td:nth-child(4){padding-left:2px!important;padding-right:2px!important}}
 </style>
 </head>
 <body>
@@ -155,7 +157,7 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
   </div>
   <div class="searchrow">
    <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="birthday">Doğum günü yaklaşanlar</option><option value="name">İsim (A → Z)</option></select>
-   <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option><option value="archived">Arşivdekiler</option></select>
+   <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option></select>
   </div>
   <div class="tablewrap">
    <table><thead><tr><th>Asistan Hekim</th><th>Başlangıç tarihi</th><th>Net kıdem</th><th>5 yıla kalan</th></tr></thead><tbody id="staffTableBody"></tbody></table>
@@ -458,10 +460,10 @@ function openInfo(id){
  setBackButton(true);
  const p=people.find(x=>x.id===id);if(!p)return;
  modalState={type:'info',personId:id,deductionId:null};
- $('modalTitle').textContent=p.name;$('modalSubtitle').textContent='Personel bilgileri ve kıdem düşüm mazeretleri';
+ $('modalTitle').textContent=p.name;$('modalSubtitle').textContent='Asistan hekim bilgileri ve kıdeme dahil olmayan süre kayıtları';
  const deductions=p.deductions.map(d=>'<div class="deduction"><div class="deductiontop"><div><div class="deductiontitle">'+escapeHtml(d.reason)+'</div><div class="deductionmeta">Kayıt tarihi: '+(d.createdAt?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d.createdAt)):'—')+'</div></div><div class="durationpill">'+durationText(durationDays(d))+'</div></div>'+(d.description?'<div class="deductiondesc">'+escapeHtml(d.description)+'</div>':'')+'<div class="deductiontools"><button class="btn small" data-modal-action="edit-deduction" data-deduction-id="'+d.id+'">'+icon('edit')+' Düzenle</button><button class="btn small danger" data-modal-action="delete-deduction" data-deduction-id="'+d.id+'">'+icon('trash')+' Sil</button></div></div>').join('');
  $('modalBody').innerHTML='<div class="infochips"><span class="chip">Başlangıç: '+dateText(p.start)+'</span>'+(p.birthday?'<span class="chip">Doğum tarihi: '+dateText(p.birthday)+'</span>':'<span class="chip">Doğum tarihi girilmemiş</span>')+'</div><div class="infochips"><span class="chip">Ham süre: '+durationText(elapsed(p))+'</span><span class="chip">Toplam düşüm: '+durationText(deductionTotal(p))+'</span><span class="chip">Net kıdem: '+durationText(netDays(p))+'</span></div><div class="sectionrow"><h3>Kıdeme dahil olmayan süre kayıtları ('+p.deductions.length+')</h3><button class="btn primary small" data-modal-action="add-deduction">'+icon('plus')+' Kıdeme dahil olmayan süre ekle</button></div>'+(deductions||'<div class="empty" style="padding:18px;border:1px dashed var(--line);border-radius:10px">Henüz kıdeme dahil olmayan süre kaydı eklenmemiş.</div>')+'<div class="notice">Ay = 30 gün, yıl = 365 gün olarak hesaplanır. 0 girilen süre alanları sıfır kalır. Her mazeret kaydı ayrı ayrı düzenlenebilir veya silinebilir.</div>';
- footerButtons([{text:'Personeli sil',action:'delete-person',class:'danger'},{text:'Kapat',action:'close'},{text:'Personeli düzenle',action:'edit-person',class:'primary'}]);openModal();
+ footerButtons([{text:'Asistan hekimi sil',action:'delete-person',class:'danger'},{text:'Kapat',action:'close'},{text:'Bilgileri düzenle',action:'edit-person',class:'primary'}]);openModal();
 }
 function openDeductionForm(personId,deduction,returnToAllDeductions=false){
  setBackButton(true);
