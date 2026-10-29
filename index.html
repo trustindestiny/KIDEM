@@ -500,6 +500,7 @@ document.addEventListener('click',e=>{
  const a=m.dataset.modalAction,p=findPerson(modalState.personId),dId=m.dataset.deductionId;
  if(a==='close')closeModal();
  if(a==='menu-edit'){closeModal();if(p)openPersonForm(p)}
+ if(a==='menu-graduation'){if(p)openGraduationForm(p)}
  if(a==='menu-history'){closeModal();if(p)openInfo(p.id)}
  if(a==='menu-archive'){
   if(p&&confirm(p.name+' kaydı arşivlensin mi? Personel ve kıdem geçmişi silinmeyecek; personel arşiv listesinden yeniden aktifleştirilebilir.')){p.archived=true;save();closeModal();showToast('Kayıt arşivlendi.');}
@@ -516,6 +517,12 @@ document.addEventListener('click',e=>{
   if(modalState.personId){const old=findPerson(modalState.personId);if(old){const hadGraduation=!!old.graduationDate;old.name=name;old.start=start;old.birthday=birthday;old.graduationDate=graduationDate;if(graduationDate)old.archived=true;else if(hadGraduation)old.archived=false;save();showToast('Personel bilgileri güncellendi.')}}else{people.push({id:uid(),name,start,birthday,graduationDate,archived:!!graduationDate,deductions:[]});save();showToast(graduationDate?'Personel mezuniyet nedeniyle arşivlendi.':'Yeni personel eklendi.')}
   closeModal();
  }
+ if(a==='save-graduation'){
+  const value=$('graduationDateInput').value;
+  if(value&&!localDate(value)){alert('Mezuniyet tarihini kontrol edin.');return}
+  if(p){p.graduationDate=value;if(value){p.archived=true;save();closeModal();showToast('Mezuniyet tarihi kaydedildi; personel arşivlendi.')}else{p.archived=false;save();closeModal();showToast('Mezuniyet tarihi silindi; personel arşivden çıkarıldı.')}}
+ }
+ if(a==='delete-graduation'){if(p){p.graduationDate='';p.archived=false;save();closeModal();showToast('Mezuniyet tarihi silindi; personel arşivden çıkarıldı.')}}
  if(a==='edit-person'){closeModal();openPersonForm(p)}
  if(a==='delete-person'){
   if(p&&confirm(p.name+' personelini ve bu personele ait tüm kıdem düşüm kayıtlarını silmek istiyor musunuz? Bu işlem geri alınamaz.')){
