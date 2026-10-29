@@ -46,6 +46,72 @@ th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th
  th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:21%}th:nth-child(4){width:22%}th:nth-child(5){width:12%}
  .iconbtn{width:17px}.namecell{font-size:8.5px}.startdate,.tenure,.remaining{font-size:7.5px}
 }
+
+/* App navigation and iOS safe-area refinement */
+.topbar{position:sticky;top:0;z-index:15;padding-top:calc(12px + env(safe-area-inset-top,0px));padding-bottom:13px}
+main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
+.main-tabs{display:grid;grid-template-columns:1fr 1.25fr 1fr;gap:7px;margin:0 0 14px;padding:5px;background:#e8eff2;border:1px solid #d8e4e9;border-radius:14px;position:relative}
+.main-tab{appearance:none;border:1px solid transparent;border-radius:10px;background:transparent;color:#536b77;padding:10px 9px;display:flex;align-items:center;justify-content:center;gap:7px;min-width:0;font-size:12px;font-weight:750;line-height:1.2}
+.main-tab.active{background:#fff;color:#123b55;border-color:#dce6ea;box-shadow:0 2px 6px #123b5512}
+.main-tab span:first-child{overflow-wrap:anywhere}
+.tab-count{background:#dce8ee;border-radius:20px;min-width:23px;padding:3px 6px;text-align:center;font-size:10px;font-weight:800;color:#234f66}
+.main-tab.active .tab-count{background:#123b55;color:#fff}
+.view-panel{display:none}
+.view-panel.active{display:block}
+.view-panel[hidden]{display:none!important}
+.view-panel>.panel{margin-bottom:0}
+.stat-action{min-height:75px}
+.register-body{padding:14px 18px}
+.register-empty{margin:14px}
+.no-note{opacity:.75}
+.birthday-list-section{padding:16px 18px}
+.birthday-list-heading{display:flex;align-items:center;gap:8px;margin:0 0 12px;font-size:15px;font-weight:800;color:#17384d}
+.section-count{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 7px;border-radius:20px;background:#e9f1f5;color:#28556b;font-size:11px}
+.month-row{display:grid;grid-template-columns:104px minmax(0,1fr);gap:14px;padding:12px 0}
+.month-row+.month-row{border-top:1px solid var(--line)}
+.month-label{font-size:13px;font-weight:800;color:#244f65;padding:2px 0}
+.month-people{min-width:0}
+.birthday-person{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:3px 0;line-height:1.45}
+.birthday-person-main{min-width:0;overflow-wrap:anywhere}
+.birthday-person-main strong{font-size:12px;font-weight:700}
+.birthday-person-main span{font-size:11px;color:var(--muted);white-space:nowrap}
+.birthday-relative{font-size:10px;color:#2b6c59;background:#e8f5ee;border-radius:20px;padding:3px 7px;white-space:nowrap;flex-shrink:0;font-weight:700}
+.birthday-relative.today{color:#b91c1c;background:#fff0f0}
+.past-birthdays{margin-top:28px;padding-top:21px;border-top:2px dashed #cddbe1;background:linear-gradient(180deg,#f7fafb 0%,#fff 54px);border-radius:10px}
+.past-birthdays .birthday-list-heading{color:#6a7e88}
+.past-birthdays .birthday-person-main{color:#5c707b}
+@media(max-width:760px){
+ .topbar{padding-left:10px;padding-right:10px;padding-bottom:10px}
+ .brand{gap:8px}.brandicon{width:34px;height:34px;border-radius:10px}.brandicon svg{width:24px;height:24px}.brand h1{font-size:15px}.brand p{font-size:9px}.datebadge{font-size:8px;max-width:76px}
+ main{padding:10px 7px calc(22px + env(safe-area-inset-bottom,0px))}
+ .main-tabs{grid-template-columns:1fr 1.16fr .9fr;gap:4px;padding:4px;border-radius:12px;margin-bottom:10px}
+ .main-tab{padding:9px 4px;gap:4px;font-size:10px;flex-wrap:wrap;text-align:center;flex-direction:column;min-height:56px}
+ .tab-count{font-size:9px;min-width:20px;padding:2px 5px}
+ .birthday{padding:8px 9px;margin-bottom:10px}.birthday strong{font-size:12px}.birthday-message{font-size:11px}
+ .panelhead{padding:11px 9px;gap:8px}.panelhead .actions{justify-content:flex-end;max-width:55%}.paneltitle{font-size:14px}.subline{font-size:10px;line-height:1.35}
+ .searchrow{padding:8px;gap:6px}.searchrow select{font-size:10px}
+ .tablewrap{overflow-x:auto;overscroll-behavior-x:contain}
+ table{min-width:625px;table-layout:fixed}
+ thead th{font-size:9px;padding:8px 5px}tbody td{font-size:10px;padding:8px 5px}
+ th:nth-child(1){width:30%}th:nth-child(2){width:16%}th:nth-child(3){width:20%}th:nth-child(4){width:23%}th:nth-child(5){width:11%}
+ .namecell{font-size:10px;white-space:normal;overflow-wrap:anywhere}.birthline{font-size:9px}.startdate,.tenure,.remaining{font-size:9px}
+ .tools{justify-content:center}.iconbtn{width:27px;height:29px}.iconbtn svg{width:15px;height:15px}
+ .register-body{padding:10px}.deduction-group-title{font-size:12px}.deduction{padding:9px}
+ .birthday-list-section{padding:12px 10px}.birthday-list-heading{font-size:13px}
+ .month-row{grid-template-columns:70px minmax(0,1fr);gap:8px;padding:10px 0}.month-label{font-size:12px}
+ .birthday-person{gap:6px;align-items:flex-start}.birthday-person-main strong{font-size:11px}.birthday-person-main span{font-size:10px}.birthday-relative{font-size:9px;padding:2px 5px}
+ .past-birthdays{margin-top:24px;padding-top:17px}
+ .tablefoot{padding:8px 9px;font-size:9px;gap:5px}
+}
+@media(max-width:390px){
+ .brand h1{font-size:14px}.brand p{font-size:8px}.datebadge{max-width:65px}
+ .main-tab{font-size:9px;padding:8px 3px;min-height:54px}
+ .panelhead .actions{max-width:58%}.panelhead .actions .btn{font-size:9px;padding:6px}
+ table{min-width:600px}
+ .month-row{grid-template-columns:62px minmax(0,1fr)}
+ .birthday-person{flex-direction:column;gap:1px}.birthday-relative{align-self:flex-start}
+}
+
 </style>
 </head>
 <body>
@@ -59,14 +125,17 @@ th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th
  </div>
 </header>
 <main>
+ <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
+  <button class="main-tab active" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Asistan Hekim</span><span class="tab-count" id="tabStaffCount">17</span></button>
+  <button class="main-tab" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdem Düşüş Kayıtları</span><span class="tab-count" id="tabDeductionCount">0</span></button>
+  <button class="main-tab" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdayCount">0</span></button>
+ </nav>
  <section class="birthday" id="birthdayBanner" role="status" aria-live="polite">
   <div class="birthday-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="#c62828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15h24v13H4z"/><path d="M4 20c3 0 3-2 6-2s3 2 6 2 3-2 6-2 3 2 6 2"/><path d="M9 15V9a2 2 0 0 1 4 0v6m2 0V7a2 2 0 0 1 4 0v8m2 0v-4a2 2 0 0 1 4 0v4"/></svg></div>
   <div><strong id="birthdayHeading">Doğum günü</strong><div class="names" id="birthdayNames"></div><div class="tomorrow" id="birthdaySub"></div></div>
  </section>
- <section class="stats" aria-label="Özet bilgiler">
-  <div class="stat"><div class="staticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="statlabel">Toplam personel</div><div class="statvalue" id="staffCount">17</div></div></div>
-  <button type="button" class="stat stat-action" id="deductionSummary" aria-label="Tüm kıdem düşüm kayıtlarını aç"><div class="staticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div><div><div class="statlabel">Kıdem düşüm kayıtları · Listeyi aç</div><div class="statvalue" id="deductionCount">0</div></div></button>
- </section>
+ 
+ <section class="view-panel active" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
  <section class="panel">
   <div class="panelhead">
    <div><h2 class="paneltitle">Asistan Hekim</h2><div class="subline">Kıdem her gün otomatik hesaplanır. Mazeret kayıtları bilgi penceresindedir.</div></div>
@@ -84,11 +153,29 @@ th:nth-child(1){width:30%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th
    <table><thead><tr><th>Personel</th><th>Başlangıç tarihi</th><th>Net kıdem</th><th>5 yıla kalan</th><th style="text-align:right">İşlemler</th></tr></thead><tbody id="staffTableBody"></tbody></table>
   </div>
   <div class="mobile-list" id="mobileList"></div>
-  <div class="empty hidden" id="emptyState">Aramana uygun personel bulunamadı.</div>
+  <div class="empty hidden" id="emptyState">Bu filtreye uygun asistan hekim bulunamadı.</div>
   <div class="tablefoot"><span id="resultCount">17 personel</span><span>Ay = 30 gün · Yıl = 365 gün · Veriler bu tarayıcıda saklanır</span></div>
  </section>
  <p class="helper" style="margin:12px 2px 0">Not: Bu uygulama yerel tarayıcı kaydı kullanır. Cihaz değiştirirken “Yedek al” ile JSON yedeğini dışa aktarın ve yeni cihazda “Yükle” seçeneğiyle geri yükleyin.</p>
  <input class="fileinput" id="importFile" type="file" accept="application/json,.json">
+ </section>
+ <section class="view-panel" id="view-deductions" role="tabpanel" aria-labelledby="tab-deductions" hidden>
+  <section class="panel">
+   <div class="panelhead">
+    <div><h2 class="paneltitle">Kıdem Düşüş Kayıtları</h2><div class="subline">Tüm mazeretler personele göre gruplanır. Her kaydı buradan düzenleyebilir veya silebilirsin.</div></div>
+   </div>
+   <div class="register-body" id="deductionRegisterList"></div>
+   <div class="tablefoot"><span id="deductionRegisterCount">0 kayıt</span><span>1 ay = 30 gün · 1 yıl = 365 gün</span></div>
+  </section>
+ </section>
+ <section class="view-panel" id="view-birthdays" role="tabpanel" aria-labelledby="tab-birthdays" hidden>
+  <section class="panel">
+   <div class="panelhead">
+    <div><h2 class="paneltitle">Doğum Günleri</h2><div class="subline">Yaklaşan doğum günleri tarihe göre sıralanır. Bu yıl geçmiş olanlar listenin altında yer alır.</div></div>
+   </div>
+   <div class="birthday-schedule" id="birthdaySchedule"></div>
+  </section>
+ </section>
 </main>
 <div class="modalback" id="modalBack" role="presentation">
  <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
@@ -218,9 +305,12 @@ function filteredPeople(){
 }
 function render(){
  $('todayLabel').textContent=humanToday();
- $('staffCount').textContent=people.length;
- $('deductionCount').textContent=totalDeductions();
+ $('tabStaffCount').textContent=people.length;
+ $('tabDeductionCount').textContent=totalDeductions();
+ $('tabBirthdayCount').textContent=people.filter(p=>p.birthday).length;
  birthdayInfo();
+ renderDeductionRegister();
+ renderBirthdaySchedule();
  const list=filteredPeople();
  $('resultCount').textContent=list.length+' / '+people.length+' personel';
  $('emptyState').classList.toggle('hidden',list.length>0);
@@ -228,22 +318,76 @@ function render(){
   const done=countdownDays(p)===0;
   const birthdayLine=p.birthday?'<span class="birthline">🎁 '+dateText(p.birthday)+'</span>':'';
   const deductionsLine=p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'';
-  return '<tr><td><div class="namecell">'+escapeHtml(p.name)+'</div>'+birthdayLine+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td><td><div class="tools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' bilgisi" title="Bilgi ve mazeretler">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle" title="Personeli düzenle">'+icon('edit')+'</button></div></td></tr>'
+  return '<tr><td><div class="namecell">'+escapeHtml(p.name)+'</div>'+birthdayLine+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td><td><div class="tools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' bilgisi" title="Bilgi ve düzenleme">'+icon('info')+'</button></div></td></tr>'
  }).join('');
  $('mobileList').innerHTML='';
 }
-function openAllDeductions(){
- modalState={type:'all-deductions',personId:null,deductionId:null,returnToAllDeductions:true};
- $('modalTitle').textContent='Tüm kıdem düşüm kayıtları';
- $('modalSubtitle').textContent='Mazeretler personel adına göre gruplanmıştır. Her kaydı buradan düzenleyebilir veya silebilirsiniz.';
+function showTab(tabName){
+ const tabs=[...document.querySelectorAll('.main-tab')];
+ tabs.forEach(tab=>{
+  const active=tab.dataset.tab===tabName;
+  tab.classList.toggle('active',active);
+  tab.setAttribute('aria-selected',active?'true':'false');
+ });
+ document.querySelectorAll('.view-panel').forEach(view=>{
+  const active=view.id==='view-'+tabName;
+  view.classList.toggle('active',active);
+  view.hidden=!active;
+ });
+ if(tabName==='deductions')renderDeductionRegister();
+ if(tabName==='birthdays')renderBirthdaySchedule();
+}
+function openAllDeductions(){showTab('deductions')}
+function renderDeductionRegister(){
+ const root=$('deductionRegisterList');if(!root)return;
  const groups=people.filter(p=>p.deductions.length).slice().sort((a,b)=>a.name.localeCompare(b.name,'tr'));
  const html=groups.map(person=>{
-  const entries=person.deductions.map(d=>'<div class="deduction"><div class="deductiontop"><div><div class="deductiontitle">'+escapeHtml(d.reason)+'</div><div class="deductionmeta">Kayıt tarihi: '+(d.createdAt?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d.createdAt)):'—')+'</div></div><div class="durationpill">'+durationText(durationDays(d))+'</div></div>'+(d.description?'<div class="deductiondesc">'+escapeHtml(d.description)+'</div>':'<div class="deductiondesc" style="color:#8797a0">Açıklama eklenmemiş</div>')+'<div class="deductiontools"><button class="btn small" data-modal-action="edit-global-deduction" data-person-id="'+person.id+'" data-deduction-id="'+d.id+'">'+icon('edit')+' Düzenle</button><button class="btn small danger" data-modal-action="delete-global-deduction" data-person-id="'+person.id+'" data-deduction-id="'+d.id+'">'+icon('trash')+' Sil</button></div></div>').join('');
+  const entries=person.deductions.slice().sort((a,b)=>(a.createdAt||'').localeCompare(b.createdAt||'')).map(d=>'<article class="deduction"><div class="deductiontop"><div><div class="deductiontitle">'+escapeHtml(d.reason)+'</div><div class="deductionmeta">Kayıt tarihi: '+(d.createdAt?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d.createdAt)):'—')+'</div></div><div class="durationpill">'+durationText(durationDays(d))+'</div></div>'+(d.description?'<div class="deductiondesc">'+escapeHtml(d.description)+'</div>':'<div class="deductiondesc no-note">Açıklama eklenmemiş</div>')+'<div class="deductiontools"><button class="btn small" data-modal-action="edit-global-deduction" data-person-id="'+person.id+'" data-deduction-id="'+d.id+'">'+icon('edit')+' Düzenle</button><button class="btn small danger" data-modal-action="delete-global-deduction" data-person-id="'+person.id+'" data-deduction-id="'+d.id+'">'+icon('trash')+' Sil</button></div></article>').join('');
   return '<section class="deduction-group"><div class="deduction-group-title">'+escapeHtml(person.name)+'<span>'+person.deductions.length+' kayıt</span></div>'+entries+'</section>';
  }).join('');
- $('modalBody').innerHTML=html||'<div class="empty" style="padding:24px;border:1px dashed var(--line);border-radius:10px">Henüz kıdem düşüm kaydı bulunmuyor.</div>';
- footerButtons([{text:'Kapat',action:'close'}]);
- openModal();
+ root.innerHTML=html||'<div class="empty register-empty">Henüz kıdem düşüm kaydı bulunmuyor.</div>';
+ $('deductionRegisterCount').textContent=totalDeductions()+' kayıt · '+groups.length+' personel';
+}
+function renderBirthdaySchedule(){
+ const root=$('birthdaySchedule');if(!root)return;
+ const now=today(),year=now.getFullYear();
+ const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+ const entries=people.filter(p=>p.birthday).map(p=>{
+  const birth=localDate(p.birthday);if(!birth)return null;
+  let due=new Date(year,birth.getMonth(),birth.getDate(),12);
+  // On non-leap years, keep February 29 birthdays in February for the yearly list.
+  if(birth.getMonth()===1&&birth.getDate()===29&&due.getMonth()!==1)due=new Date(year,1,28,12);
+  return {person:p,birth,due};
+ }).filter(Boolean);
+ const upcoming=entries.filter(e=>dayDiff(now,e.due)>=0).sort((a,b)=>a.due-b.due||a.person.name.localeCompare(b.person.name,'tr'));
+ const past=entries.filter(e=>dayDiff(now,e.due)<0).sort((a,b)=>a.due-b.due||a.person.name.localeCompare(b.person.name,'tr'));
+ function relative(e){
+  const days=dayDiff(now,e.due);
+  return days===0?'Bugün':days===1?'Yarın':days===7?'1 hafta sonra':days+' gün sonra';
+ }
+ function grouped(list,showRelative){
+  const byMonth=new Map();
+  list.forEach(e=>{
+   const month=e.due.getMonth();
+   if(!byMonth.has(month))byMonth.set(month,[]);
+   byMonth.get(month).push(e);
+  });
+  return [...byMonth.entries()].map(([month,items])=>{
+   const names=items.map(e=>'<div class="birthday-person"><div class="birthday-person-main"><strong>'+escapeHtml(e.person.name)+'</strong> <span>('+dateText(e.person.birthday)+')</span></div>'+(showRelative?'<span class="birthday-relative '+(dayDiff(now,e.due)===0?'today':'')+'">'+relative(e)+'</span>':'')+'</div>').join('');
+   return '<div class="month-row"><div class="month-label">'+months[month]+'</div><div class="month-people">'+names+'</div></div>';
+  }).join('');
+ }
+ let out='';
+ if(upcoming.length){
+  out+='<section class="birthday-list-section"><h3 class="birthday-list-heading"><span>Yaklaşan doğum günleri</span><span class="section-count">'+upcoming.length+'</span></h3><div class="month-list">'+grouped(upcoming,true)+'</div></section>';
+ }else{
+  out+='<section class="birthday-list-section"><h3 class="birthday-list-heading">Yaklaşan doğum günleri</h3><div class="empty register-empty">Bu yıl kalan doğum günü yok.</div></section>';
+ }
+ if(past.length){
+  out+='<section class="birthday-list-section past-birthdays"><h3 class="birthday-list-heading"><span>Bu yıl doğum günü geçmiş olanlar</span><span class="section-count">'+past.length+'</span></h3><div class="month-list">'+grouped(past,false)+'</div></section>';
+ }
+ if(!entries.length)out='<div class="empty register-empty">Doğum tarihi girilmiş personel yok. Personel bilgisinden doğum tarihi ekleyebilirsin.</div>';
+ root.innerHTML=out;
 }
 function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
 function closeModal(){ $('modalBack').classList.remove('open');document.body.style.overflow='';modalState={type:null,personId:null,deductionId:null};}
@@ -306,7 +450,7 @@ function importData(file){
  reader.readAsText(file);
 }
 $('addPersonBtn').addEventListener('click',()=>openPersonForm(null));
-$('deductionSummary').addEventListener('click',openAllDeductions);
+document.querySelectorAll('.main-tab').forEach(tab=>tab.addEventListener('click',()=>showTab(tab.dataset.tab)));
 $('exportBtn').addEventListener('click',exportData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importData(e.target.files[0]);e.target.value=''});
@@ -339,7 +483,7 @@ document.addEventListener('click',e=>{
  if(a==='delete-global-deduction'){
   const globalPerson=findPerson(m.dataset.personId);
   if(globalPerson&&confirm(globalPerson.name+' kişisinin bu kıdem düşüm kaydını silmek istiyor musunuz?')){
-   globalPerson.deductions=globalPerson.deductions.filter(x=>x.id!==dId);save();showToast('Kıdem düşüm kaydı silindi.');openAllDeductions();
+   globalPerson.deductions=globalPerson.deductions.filter(x=>x.id!==dId);save();showToast('Kıdem düşüm kaydı silindi.');showTab('deductions');
   }
  }
  if(a==='delete-deduction'){
@@ -347,7 +491,7 @@ document.addEventListener('click',e=>{
    p.deductions=p.deductions.filter(x=>x.id!==dId);save();showToast('Kıdem düşüm kaydı silindi.');openInfo(p.id)
   }
  }
- if(a==='back-info'){if(modalState.returnToAllDeductions)openAllDeductions();else openInfo(modalState.personId);}
+ if(a==='back-info'){if(modalState.returnToAllDeductions){closeModal();showTab('deductions')}else openInfo(modalState.personId);}
  if(a==='save-deduction'){
   if(!p)return;
   const values=['dedYears','dedMonths','dedDays'].map(id=>$(id).value.trim());
@@ -356,7 +500,7 @@ document.addEventListener('click',e=>{
   if(data.years===0&&data.months===0&&data.days===0){if(!confirm('Süre 0 gün olacak. Bu kaydı yine de kaydetmek istiyor musunuz?'))return}
   if(modalState.deductionId){const d=p.deductions.find(x=>x.id===modalState.deductionId);if(d)Object.assign(d,data)}else{p.deductions.push({id:uid(),...data,createdAt:new Date().toISOString()})}
   const returnToAll=!!modalState.returnToAllDeductions;
-  save();showToast('Kıdem düşüm kaydedildi.');if(returnToAll)openAllDeductions();else openInfo(p.id);
+  save();showToast('Kıdem düşüm kaydedildi.');if(returnToAll){closeModal();showTab('deductions')}else openInfo(p.id);
  }
 });
 $('closeModal').addEventListener('click',closeModal);
