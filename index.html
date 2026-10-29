@@ -435,7 +435,7 @@ function openPersonForm(person){
  modalState={type:'person-form',personId:person?person.id:null,deductionId:null};
  $('modalTitle').textContent=person?'Personeli düzenle':'Yeni personel ekle';$('modalSubtitle').textContent=person?'İsim ve tarih bilgilerini güncelle.':'Ad, işe başlama ve doğum tarihini gir.';
  $('modalBody').innerHTML='<div class="fieldgrid">'+field('Adı ve soyadı','personName',person?person.name:'','text',{required:true,full:true})+field('İşe başlama tarihi','personStart',person?person.start:'','date',{required:true})+field('Doğum tarihi (isteğe bağlı)','personBirthday',person?person.birthday:'','date')+'</div>';
- footerButtons([{text:'Vazgeç',action:'close'},{text:person?'Değişiklikleri kaydet':'Personeli ekle',action:'save-person',class:'primary'}]);openModal();setTimeout(()=>$('personName').focus(),30);
+ footerButtons([{text:'Vazgeç',action:'close'},...(person&&person.birthday?[{text:'Doğum tarihini sil',action:'clear-birthday',class:'danger'}]:[]),{text:person?'Değişiklikleri kaydet':'Personeli ekle',action:'save-person',class:'primary'}]);openModal();setTimeout(()=>$('personName').focus(),30);
 }
 function openPersonMenu(id){
  const p=findPerson(id);if(!p)return;
@@ -520,6 +520,7 @@ document.addEventListener('click',e=>{
  if(a==='menu-restore'){
   if(p){p.archived=false;save();closeModal();showToast('Personel yeniden aktifleştirildi.');}
  }
+ if(a==='clear-birthday'){if(p){p.birthday='';save();showToast('Doğum tarihi silindi.');openPersonForm(p)}return}
  if(a==='save-person'){
   const name=$('personName').value.trim(),start=$('personStart').value,birthday=$('personBirthday').value;
   if(!name||!start){alert('Ad soyad ve işe başlama tarihi zorunludur.');return}
