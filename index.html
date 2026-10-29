@@ -579,7 +579,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=10').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=11').catch(()=>{}));
 })();
 </script>
 </body>
