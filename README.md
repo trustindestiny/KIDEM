@@ -19,3 +19,12 @@ https://trustindestiny.github.io/KIDEM/
 
 ## Veri saklama
 Personel kayıtları tarayıcının yerel depolamasında saklanır. Başka cihazda kullanmak için uygulamadaki Yedek al ve Yükle işlevlerini kullanın. Personel kayıtlarını herkese açık depodaki kaynak koduna eklemeyin.
+
+## Telefona uygulama olarak yükleme
+
+Önce GitHub Pages yayınının etkin olduğundan emin olun: Settings → Pages → Deploy from a branch → `main` ve `/(root)`.
+
+- **iPhone (Safari):** Yayınlanan uygulama bağlantısını Safari'de açın → Paylaş → Ana Ekrana Ekle. Uygulama adı ve ana ekran ikonu kullanılır.
+- **Android (Chrome):** Uygulama bağlantısını Chrome'da açın → menü → Uygulamayı yükle veya Ana ekrana ekle.
+
+Kurulumdan sonra uygulama simgesi ana ekranda görünür. Veriler cihazın tarayıcı depolamasında tutulur; cihazlar arası otomatik senkronizasyon yoktur. Verileri taşımak için uygulamadaki JSON yedekleme ve geri yükleme seçeneklerini kullanın.
