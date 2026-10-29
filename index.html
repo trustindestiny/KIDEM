@@ -112,13 +112,20 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
  .birthday-person{flex-direction:column;gap:1px}.birthday-relative{align-self:flex-start}
 }
 
+
+/* Polished app icon and sticky navigation */
+.brandicon-img{width:46px;height:46px;border-radius:13px;display:block;flex-shrink:0;border:1px solid #ffffff35;object-fit:cover}
+.main-tabs{position:sticky;top:var(--topbar-height,76px);z-index:12}
+.topbar{isolation:isolate}
+@media(max-width:760px){.brandicon-img{width:38px;height:38px;border-radius:11px}}
+
 </style>
 </head>
 <body>
 <header class="topbar">
  <div class="toprow">
   <div class="brand">
-   <div class="brandicon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M10 4h12l-3 5 2 7-5 5-5-5 2-7-3-5Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 28h12l-3-5 2-7-5-5-5 5 2 7-3 5Z" stroke="white" stroke-width="1.8" stroke-linejoin="round" opacity=".75"/><path d="M12 16h8" stroke="#a9d8e8" stroke-width="2" stroke-linecap="round"/></svg></div>
+   <img class="brandicon-img" src="./icon.svg" alt="" aria-hidden="true">
    <div><h1>Anestezi ve Reanimasyon</h1><p>Personel kıdem ve 5 yıllık geri sayım takibi</p></div>
   </div>
   <div class="datebadge" id="todayLabel">Bugünün tarihi</div>
@@ -126,9 +133,9 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 </header>
 <main>
  <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
-  <button class="main-tab active" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Asistan Hekim</span><span class="tab-count" id="tabStaffCount">17</span></button>
-  <button class="main-tab" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdem Düşüş Kayıtları</span><span class="tab-count" id="tabDeductionCount">0</span></button>
-  <button class="main-tab" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdayCount">0</span></button>
+  <button class="main-tab active" id="tab-staff" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Toplam Asistan Hekim</span><span class="tab-count" id="tabStaffCount">17</span></button>
+  <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdem Düşüş Kayıtları</span><span class="tab-count" id="tabDeductionCount">0</span></button>
+  <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdayCount">0</span></button>
  </nav>
  <section class="birthday" id="birthdayBanner" role="status" aria-live="polite">
   <div class="birthday-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="#c62828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15h24v13H4z"/><path d="M4 20c3 0 3-2 6-2s3 2 6 2 3-2 6-2 3 2 6 2"/><path d="M9 15V9a2 2 0 0 1 4 0v6m2 0V7a2 2 0 0 1 4 0v8m2 0v-4a2 2 0 0 1 4 0v4"/></svg></div>
@@ -322,6 +329,10 @@ function render(){
  }).join('');
  $('mobileList').innerHTML='';
 }
+function updateTopbarHeight(){
+ const topbar=document.querySelector('.topbar');
+ if(topbar)document.documentElement.style.setProperty('--topbar-height',topbar.offsetHeight+'px');
+}
 function showTab(tabName){
  const tabs=[...document.querySelectorAll('.main-tab')];
  tabs.forEach(tab=>{
@@ -507,6 +518,8 @@ $('closeModal').addEventListener('click',closeModal);
 $('modalBack').addEventListener('click',e=>{if(e.target===$('modalBack'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
+updateTopbarHeight();
+window.addEventListener('resize',updateTopbarHeight);
 if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
 })();
 </script>
