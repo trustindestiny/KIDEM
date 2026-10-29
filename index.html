@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#123b55">
+<meta name="description" content="Anestezi ve Reanimasyon ekibi için kıdem ve beş yıllık geri sayım takip uygulaması.">
+<title>Kıdem | Anestezi ve Reanimasyon</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<style>
+:root{color-scheme:light;--navy:#123b55;--navy2:#1e536d;--ink:#172b38;--muted:#607480;--line:#dce5e9;--paper:#f3f7f8;--white:#fff;--red:#c62828;--redbg:#fff0f0;--teal:#dff4ef;--shadow:0 8px 28px rgba(18,59,85,.08)}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;font-size:14px;line-height:1.45}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid #80c6df;outline-offset:2px}
+.topbar{background:linear-gradient(120deg,#102f45,#1d5870);color:#fff;padding:20px max(20px,calc((100% - 1380px)/2));box-shadow:0 4px 16px #123b5520}.brand{display:flex;align-items:center;gap:13px}.brandicon{height:48px;width:48px;border-radius:14px;background:#ffffff18;border:1px solid #ffffff33;display:grid;place-items:center;flex-shrink:0}.brandicon svg{width:30px;height:30px}.brand h1{font-size:clamp(20px,2.5vw,28px);line-height:1.2;margin:0;font-weight:750;letter-spacing:-.6px}.brand p{margin:4px 0 0;color:#d3e3eb;font-size:12px}.toprow{max-width:1380px;margin:auto;display:flex;justify-content:space-between;gap:20px;align-items:center}.datebadge{font-variant-numeric:tabular-nums;color:#d3e3eb;text-align:right;font-size:12px;white-space:nowrap}
+main{max-width:1380px;padding:18px 20px 42px;margin:auto}.birthday{display:none;margin-bottom:14px;padding:10px 14px;border:1px solid #ffc7c7;border-radius:12px;background:var(--redbg);color:var(--red);align-items:flex-start;gap:10px}.birthday.show{display:flex}.birthday-symbol{font-size:23px;line-height:1.2;flex-shrink:0}.birthday strong{display:block;font-size:13px}.birthday .names{margin-top:2px;font-weight:650;overflow-wrap:anywhere}.birthday .tomorrow{font-size:11px;margin-top:2px;color:#a72525}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:14px}.stat{background:var(--white);border:1px solid var(--line);border-radius:13px;padding:13px 16px;box-shadow:0 2px 7px #123b5505;display:flex;gap:12px;align-items:center;min-width:0}.staticon{width:38px;height:38px;display:grid;place-items:center;border-radius:11px;background:#eaf2f6;color:var(--navy);flex-shrink:0}.staticon svg{width:21px;height:21px}.statlabel{font-size:11px;color:var(--muted);margin-bottom:2px}.statvalue{font-weight:750;font-size:20px;line-height:1.15;font-variant-numeric:tabular-nums;white-space:nowrap}
+.panel{background:var(--white);border:1px solid var(--line);border-radius:15px;box-shadow:var(--shadow);overflow:hidden}.panelhead{padding:16px 18px 13px;display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--line)}.paneltitle{margin:0;font-size:16px;letter-spacing:-.2px}.subline{font-size:11px;color:var(--muted);margin-top:3px}.actions{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.btn{border:1px solid var(--line);border-radius:9px;background:white;color:var(--ink);padding:8px 11px;display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:12px;font-weight:650;white-space:nowrap;transition:background .15s,border-color .15s}.btn:hover{background:#f3f7f8;border-color:#b7c8d1}.btn svg{width:15px;height:15px;flex-shrink:0}.btn.primary{background:var(--navy);border-color:var(--navy);color:white}.btn.primary:hover{background:var(--navy2)}.btn.danger{color:var(--red);border-color:#efcaca;background:#fffafa}.btn.ghost{background:transparent}.btn.small{padding:6px 8px;font-size:11px}.searchrow{display:flex;gap:8px;padding:12px 18px;align-items:center;border-bottom:1px solid var(--line)}.searchwrap{position:relative;flex:1;min-width:130px}.searchwrap svg{position:absolute;left:11px;top:10px;width:16px;height:16px;color:#718590}.searchwrap input{width:100%;height:36px;padding:0 12px 0 35px;border:1px solid var(--line);border-radius:9px;background:#fbfdfd;outline-offset:1px}.searchrow select{height:36px;max-width:210px;border:1px solid var(--line);border-radius:9px;background:#fff;padding:0 9px;color:var(--ink);font-size:12px}
+.tablewrap{overflow-x:auto}table{width:100%;border-collapse:collapse;table-layout:fixed}thead th{text-align:left;padding:9px 12px;background:#f6f9fa;color:#5c717c;font-size:10px;text-transform:uppercase;letter-spacing:.55px;font-weight:750;border-bottom:1px solid var(--line)}tbody td{padding:7px 12px;border-bottom:1px solid #e9eff1;vertical-align:middle;font-size:12px}tbody tr:last-child td{border-bottom:0}tbody tr:hover{background:#fbfdfd}.namecell{font-weight:750;font-size:12px;overflow-wrap:anywhere}.startdate{white-space:nowrap;color:#4d6571;font-variant-numeric:tabular-nums}.tenure{font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}.subvalue{display:block;color:#71848e;font-size:10px;font-weight:450;margin-top:1px}.remaining{white-space:nowrap;font-variant-numeric:tabular-nums}.remaining.done{color:#14755f;font-weight:750}.tools{display:flex;align-items:center;justify-content:flex-end;gap:4px}.iconbtn{border:1px solid transparent;background:transparent;color:#4b6572;border-radius:8px;width:30px;height:30px;display:grid;place-items:center}.iconbtn:hover{background:#edf4f7;border-color:#d4e1e7}.iconbtn svg{width:16px;height:16px}.iconbtn.info{color:var(--navy);background:#eef5f8;border-color:#dbe9ef}.iconbtn.remove{color:#ac3030}.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px}.tablefoot{border-top:1px solid var(--line);padding:10px 18px;color:var(--muted);font-size:11px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.mobile-list{display:none;padding:8px;gap:7px}.personcard{border:1px solid var(--line);border-radius:11px;padding:11px;background:#fff}.personcardtop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}.personcard .namecell{font-size:13px}.personcard .startdate{font-size:11px;margin-top:2px}.personstats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:9px}.miniStat{border-radius:8px;background:#f5f8f9;padding:8px}.miniStat label{display:block;color:var(--muted);font-size:10px;margin-bottom:2px}.miniStat strong{font-size:12px;font-variant-numeric:tabular-nums}.mobiletools{display:flex;gap:4px}
+.modalback{display:none;position:fixed;inset:0;background:#0b2334a8;z-index:20;padding:18px;align-items:center;justify-content:center}.modalback.open{display:flex}.modal{width:min(620px,100%);max-height:min(88dvh,850px);overflow:auto;background:#fff;border-radius:16px;box-shadow:0 22px 70px #06172450}.modalhead{padding:17px 19px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;position:sticky;top:0;background:#fff;z-index:1}.modalhead h2{margin:0;font-size:18px}.modalhead p{margin:3px 0 0;color:var(--muted);font-size:11px}.closebtn{border:0;background:#f1f5f6;border-radius:8px;width:32px;height:32px;font-size:22px;color:#46606d;line-height:1}.modalbody{padding:18px 19px}.modalfoot{display:flex;justify-content:flex-end;gap:8px;padding:13px 19px;border-top:1px solid var(--line);background:#fbfdfd;position:sticky;bottom:0}.fieldgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:5px;min-width:0}.field.full{grid-column:1/-1}.field label{font-size:11px;font-weight:750;color:#506672}.field input,.field select,.field textarea{width:100%;border:1px solid #ccd9df;border-radius:9px;padding:9px 10px;color:var(--ink);background:#fff;min-height:38px}.field textarea{min-height:66px;resize:vertical}.helper{font-size:10px;color:var(--muted);margin-top:2px}.sectionrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 10px}.sectionrow h3{margin:0;font-size:13px}.infochips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:15px}.chip{border-radius:20px;padding:5px 9px;background:#edf4f7;color:#274c5e;font-size:11px;font-weight:650}.deduction{border:1px solid var(--line);border-radius:11px;padding:11px;margin-bottom:8px}.deductiontop{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.deductiontitle{font-weight:750;font-size:12px;overflow-wrap:anywhere}.deductionmeta{font-size:10px;color:var(--muted);margin-top:3px}.deductiondesc{font-size:11px;color:#3d5662;margin-top:6px;overflow-wrap:anywhere}.durationpill{background:#f0f5f6;border-radius:7px;padding:5px 7px;font-size:11px;font-weight:750;white-space:nowrap}.deductiontools{display:flex;gap:4px;margin-top:7px}.notice{font-size:11px;color:#5e727d;background:#f4f8f9;border:1px solid #e3ebee;border-radius:9px;padding:9px 10px;margin-top:12px}.toast{position:fixed;z-index:50;left:50%;bottom:20px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#14394f;color:#fff;padding:11px 16px;border-radius:11px;box-shadow:0 5px 25px #071e2b30;font-size:12px;transition:all .2s;max-width:calc(100% - 30px);text-align:center}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}.fileinput{display:none}
+@media(min-width:1050px){th:nth-child(1){width:29%}th:nth-child(2){width:15%}th:nth-child(3){width:20%}th:nth-child(4){width:19%}th:nth-child(5){width:17%}}
+@media(max-width:760px){.topbar{padding:15px 14px}.brandicon{width:42px;height:42px}.brand h1{font-size:20px}.brand p{font-size:11px}.datebadge{font-size:10px;max-width:100px;white-space:normal}.toprow{gap:10px}main{padding:12px 10px 30px}.stats{gap:7px}.stat{padding:10px 9px;gap:7px;border-radius:10px;display:block}.staticon{height:28px;width:28px;margin-bottom:7px}.staticon svg{width:16px;height:16px}.statlabel{font-size:9px;line-height:1.25}.statvalue{font-size:17px}.panelhead{padding:12px;align-items:flex-start}.paneltitle{font-size:14px}.subline{font-size:10px}.actions{gap:5px}.btn{padding:8px 9px;font-size:11px}.searchrow{padding:10px 12px;flex-wrap:wrap}.searchwrap{flex-basis:100%}.searchrow select{flex:1;max-width:none}.tablewrap{display:none}.mobile-list{display:grid}.tablefoot{padding:9px 12px;font-size:10px}.fieldgrid{grid-template-columns:1fr}.field.full{grid-column:auto}.modalback{padding:9px}.modal{max-height:92dvh;border-radius:13px}.modalhead,.modalbody{padding:14px}.modalfoot{padding:11px 14px}.birthday{padding:9px 10px}.birthday .names{font-size:12px}}
+@media(max-width:380px){.brand p{max-width:195px}.statvalue{font-size:15px}.actions .btn span{display:none}.actions .btn{width:36px;height:36px;padding:0}.panelhead .actions .btn.primary{width:auto;padding:8px 9px}.panelhead .actions .btn.primary span{display:inline}}
+</style>
+</head>
+<body>
+<header class="topbar">
+ <div class="toprow">
+  <div class="brand">
+   <div class="brandicon" aria-hidden="true"><svg viewBox="0 0 32 32" fill="none"><path d="M10 4h12l-3 5 2 7-5 5-5-5 2-7-3-5Z" stroke="white" stroke-width="1.8" stroke-linejoin="round"/><path d="M10 28h12l-3-5 2-7-5-5-5 5 2 7-3 5Z" stroke="white" stroke-width="1.8" stroke-linejoin="round" opacity=".75"/><path d="M12 16h8" stroke="#a9d8e8" stroke-width="2" stroke-linecap="round"/></svg></div>
+   <div><h1>Anestezi ve Reanimasyon</h1><p>Personel kıdem ve 5 yıllık geri sayım takibi</p></div>
+  </div>
+  <div class="datebadge" id="todayLabel">Bugünün tarihi</div>
+ </div>
+</header>
+<main>
+ <section class="birthday" id="birthdayBanner" role="status" aria-live="polite">
+  <div class="birthday-symbol" aria-hidden="true">🎂</div>
+  <div><strong id="birthdayHeading">Doğum günü</strong><div class="names" id="birthdayNames"></div><div class="tomorrow" id="birthdaySub"></div></div>
+ </section>
+ <section class="stats" aria-label="Özet bilgiler">
+  <div class="stat"><div class="staticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div><div class="statlabel">Toplam personel</div><div class="statvalue" id="staffCount">17</div></div></div>
+  <div class="stat"><div class="staticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><path d="M8 2h8"/></svg></div><div><div class="statlabel">5 yılı tamamlayan</div><div class="statvalue" id="completeCount">0</div></div></div>
+  <div class="stat"><div class="staticon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div><div><div class="statlabel">Kıdem düşüm kaydı</div><div class="statvalue" id="deductionCount">0</div></div></div>
+ </section>
+ <section class="panel">
+  <div class="panelhead">
+   <div><h2 class="paneltitle">Personel listesi</h2><div class="subline">Kıdem her gün otomatik hesaplanır. Mazeret kayıtları bilgi penceresindedir.</div></div>
+   <div class="actions">
+    <button class="btn" id="exportBtn" title="Yedek al"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v12m-5-5 5 5 5-5"/><path d="M5 17v4h14v-4"/></svg><span>Yedek al</span></button>
+    <button class="btn" id="importBtn" title="Yedeği geri yükle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 15V3m-5 5 5-5 5 5"/><path d="M5 17v4h14v-4"/></svg><span>Yükle</span></button>
+    <button class="btn primary" id="addPersonBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg><span>İsim ekle</span></button>
+   </div>
+  </div>
+  <div class="searchrow">
+   <div class="searchwrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"/><path d="m16 16 5 5"/></svg><input type="search" id="searchInput" placeholder="Personel ara…" aria-label="Personel ara"></div>
+   <select id="sortSelect" aria-label="Sıralama"><option value="start">Başlama tarihi (eski → yeni)</option><option value="net">Net kıdem (yüksek → düşük)</option><option value="name">İsim (A → Z)</option></select>
+   <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm personel</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdem düşümü olanlar</option></select>
+  </div>
+  <div class="tablewrap">
+   <table><thead><tr><th>Personel</th><th>Başlangıç tarihi</th><th>Net kıdem</th><th>5 yıla kalan</th><th style="text-align:right">İşlemler</th></tr></thead><tbody id="staffTableBody"></tbody></table>
+  </div>
+  <div class="mobile-list" id="mobileList"></div>
+  <div class="empty hidden" id="emptyState">Aramana uygun personel bulunamadı.</div>
+  <div class="tablefoot"><span id="resultCount">17 personel</span><span>Ay = 30 gün · Yıl = 365 gün · Veriler bu tarayıcıda saklanır</span></div>
+ </section>
+ <p class="helper" style="margin:12px 2px 0">Not: Bu uygulama yerel tarayıcı kaydı kullanır. Cihaz değiştirirken “Yedek al” ile JSON yedeğini dışa aktarın ve yeni cihazda “Yükle” seçeneğiyle geri yükleyin.</p>
+ <input class="fileinput" id="importFile" type="file" accept="application/json,.json">
+</main>
+<div class="modalback" id="modalBack" role="presentation">
+ <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+  <div class="modalhead"><div><h2 id="modalTitle">Personel</h2><p id="modalSubtitle"></p></div><button class="closebtn" id="closeModal" aria-label="Kapat">×</button></div>
+  <div class="modalbody" id="modalBody"></div>
+  <div class="modalfoot" id="modalFoot"></div>
+ </section>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+'use strict';
+const STORE_KEY='kidem-app-v1';
+const seed=[
+ {name:'İPEK KESER BAŞBAYUNDUR',start:'2021-01-21'},
+ {name:'MEHMET ŞENYIL',start:'2021-07-01'},
+ {name:'BÜŞRA ÖNER AKBALIK',start:'2021-07-12'},
+ {name:'ÖKKEŞ BAŞAK',start:'2021-11-27'},
+ {name:'HİLAL ŞEKER KORUK',start:'2022-06-10'},
+ {name:'AYŞE ÇİÇEK',start:'2022-06-13'},
+ {name:'ANIL BİÇER',start:'2022-06-20'},
+ {name:'ELİF BEYZA KÜÇÜKÇİNGÖZ',start:'2022-06-23'},
+ {name:'ÇİÇEK PINAR AKGÜL',start:'2022-06-24'},
+ {name:'CEMRE VAR',start:'2023-02-01'},
+ {name:'İHSAN YÜKSEL',start:'2024-02-01'},
+ {name:'GÖKHAN SADULLAH KARATAŞ',start:'2024-02-19'},
+ {name:'DAMLA ALKHALDI',start:'2025-08-11'},
+ {name:'İBRAHİM HALİL İPEK',start:'2025-08-11'},
+ {name:'NAİL BURAK CAN KARAMAN',start:'2025-08-11'},
+ {name:'MERVE YILDIRIM',start:'2025-08-18'},
+ {name:'ÇAĞLA CAN',start:'2025-12-22'}
+];
+const $=id=>document.getElementById(id);
+let people=loadData();
+let modalState={type:null,personId:null,deductionId:null};
+let toastTimer=null;
+function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+function loadData(){
+ try{const v=JSON.parse(localStorage.getItem(STORE_KEY));if(v&&Array.isArray(v.people))return v.people.map(normalizePerson)}catch(e){}
+ return seed.map(s=>({...s,id:uid(),birthday:'',deductions:[]}));
+}
+function normalizePerson(p){return {id:p.id||uid(),name:String(p.name||''),start:String(p.start||''),birthday:String(p.birthday||''),deductions:Array.isArray(p.deductions)?p.deductions.map(d=>({id:d.id||uid(),reason:String(d.reason||'Diğer'),description:String(d.description||''),years:nonneg(d.years),months:nonneg(d.months),days:nonneg(d.days),createdAt:d.createdAt||new Date().toISOString()})):[]}}
+function nonneg(v){const n=Number(v);return Number.isFinite(n)&&n>0?Math.floor(n):0}
+function save(){localStorage.setItem(STORE_KEY,JSON.stringify({version:1,people:people}));render()}
+function localDate(iso){if(!iso)return null;const a=iso.split('-').map(Number);if(a.length!==3||!a[0]||!a[1]||!a[2])return null;return new Date(a[0],a[1]-1,a[2],12,0,0,0)}
+function dateISO(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function today(){const d=new Date();d.setHours(12,0,0,0);return d}
+function dayDiff(a,b){return Math.floor((Date.UTC(b.getFullYear(),b.getMonth(),b.getDate())-Date.UTC(a.getFullYear(),a.getMonth(),a.getDate()))/86400000)}
+function elapsed(p){const s=localDate(p.start);return s?Math.max(0,dayDiff(s,today())):0}
+function durationDays(d){return nonneg(d.years)*365+nonneg(d.months)*30+nonneg(d.days)}
+function deductionTotal(p){return p.deductions.reduce((s,d)=>s+durationDays(d),0)}
+function netDays(p){return Math.max(0,elapsed(p)-deductionTotal(p))}
+function countdownDays(p){return Math.max(0,1825-elapsed(p)+deductionTotal(p))}
+function durationText(n){n=Math.max(0,Math.floor(n));const y=Math.floor(n/365);n-=y*365;const m=Math.floor(n/30);const d=n-m*30;return y+' yıl '+m+' ay '+d+' gün'}
+function dateText(iso){const d=localDate(iso);return d?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(d):'—'}
+function humanToday(){return new Intl.DateTimeFormat('tr-TR',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(today())}
+function totalDeductions(){return people.reduce((s,p)=>s+p.deductions.length,0)}
+function icon(name){
+ const paths={
+ info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7h.01"/>',
+ edit:'<path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L9 17l-4 1 1-4Z"/>',
+ trash:'<path d="M3 6h18M8 6V4h8v2m3 0-1 14H6L5 6m4 4v6m6-6v6"/>',
+ cake:'<path d="M4 10h16v10H4z"/><path d="M4 14c2 0 2-2 4-2s2 2 4 2 2-2 4-2 2 2 4 2M8 10V6a2 2 0 0 1 4 0v4m0-4a2 2 0 0 1 4 0v4"/>',
+ plus:'<path d="M12 5v14M5 12h14"/>'
+ };
+ return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(paths[name]||'')+'</svg>';
+}
+function escapeHtml(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function showToast(msg){const t=$('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2600)}
+function birthdayInfo(){
+ const now=today(), todayNames=[],tomorrowNames=[];
+ for(const p of people){const b=localDate(p.birthday);if(!b)continue;
+  const isToday=b.getMonth()===now.getMonth()&&b.getDate()===now.getDate();
+  const next=new Date(now.getFullYear(),b.getMonth(),b.getDate(),12);
+  const tom=new Date(now);tom.setDate(now.getDate()+1);
+  const isTomorrow=b.getMonth()===tom.getMonth()&&b.getDate()===tom.getDate();
+  if(isToday)todayNames.push(p.name);if(isTomorrow)tomorrowNames.push(p.name);
+ }
+ const banner=$('birthdayBanner');
+ if(!todayNames.length&&!tomorrowNames.length){banner.classList.remove('show');return}
+ banner.classList.add('show');
+ if(todayNames.length&&tomorrowNames.length){
+  $('birthdayHeading').textContent='Bugün ve yarın doğum günü';
+  $('birthdayNames').textContent='Bugün: '+todayNames.join(' · ')+' | Yarın: '+tomorrowNames.join(' · ');
+  $('birthdaySub').textContent='🎂 Bugün ve yarın doğum günü olan personeller';
+ }else if(todayNames.length){
+  $('birthdayHeading').textContent=todayNames.length===1?'Bugün doğum günü!':'Bugün doğum günleri!';
+  $('birthdayNames').textContent=todayNames.join(' · ');
+  $('birthdaySub').textContent='🎂 Bugün doğum günü olan personel';
+ }else{
+  $('birthdayHeading').textContent=tomorrowNames.length===1?'Yarın doğum günü!':'Yarın doğum günleri!';
+  $('birthdayNames').textContent=tomorrowNames.join(' · ');
+  $('birthdaySub').textContent='🎂 Yarın doğum günü olan personel';
+ }
+}
+function filteredPeople(){
+ const q=$('searchInput').value.trim().toLocaleLowerCase('tr-TR'),sort=$('sortSelect').value,filter=$('filterSelect').value;
+ let a=people.filter(p=>{
+  const matches=!q||p.name.toLocaleLowerCase('tr-TR').includes(q);
+  const done=countdownDays(p)===0;
+  const fits=filter==='all'||(filter==='active'&&!done)||(filter==='complete'&&done)||(filter==='deductions'&&p.deductions.length);
+  return matches&&fits;
+ });
+ a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
+ return a
+}
+function render(){
+ $('todayLabel').textContent=humanToday();
+ $('staffCount').textContent=people.length;
+ $('completeCount').textContent=people.filter(p=>countdownDays(p)===0).length;
+ $('deductionCount').textContent=totalDeductions();
+ birthdayInfo();
+ const list=filteredPeople();
+ $('resultCount').textContent=list.length+' / '+people.length+' personel';
+ $('emptyState').classList.toggle('hidden',list.length>0);
+ $('staffTableBody').innerHTML=list.map(p=>{
+  const done=countdownDays(p)===0;
+  return '<tr><td><div class="namecell">'+escapeHtml(p.name)+'</div>'+(p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'')+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span><span class="subvalue">Net kıdem</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span></td><td><div class="tools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' bilgisi" title="Bilgi ve mazeretler">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle" title="Personeli düzenle">'+icon('edit')+'</button><button class="iconbtn remove" data-action="delete" data-id="'+p.id+'" aria-label="Sil" title="Personeli sil">'+icon('trash')+'</button></div></td></tr>'
+ }).join('');
+ $('mobileList').innerHTML=list.map(p=>{
+  const done=countdownDays(p)===0;
+  return '<article class="personcard"><div class="personcardtop"><div><div class="namecell">'+escapeHtml(p.name)+'</div><div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdem düşümü</span>':'')+'</div><div class="mobiletools"><button class="iconbtn info" data-action="info" data-id="'+p.id+'" aria-label="Bilgi">'+icon('info')+'</button><button class="iconbtn" data-action="edit" data-id="'+p.id+'" aria-label="Düzenle">'+icon('edit')+'</button><button class="iconbtn remove" data-action="delete" data-id="'+p.id+'" aria-label="Sil">'+icon('trash')+'</button></div></div><div class="personstats"><div class="miniStat"><label>Net kıdem</label><strong>'+durationText(netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong class="'+(done?'remaining done':'remaining')+'">'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div></article>'
+ }).join('');
+}
+function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
+function closeModal(){ $('modalBack').classList.remove('open');document.body.style.overflow='';modalState={type:null,personId:null,deductionId:null};}
+function footerButtons(buttons){$('modalFoot').innerHTML=buttons.map(b=>'<button class="btn '+(b.class||'')+'" data-modal-action="'+b.action+'">'+escapeHtml(b.text)+'</button>').join('')}
+function field(label,id,value,type='text',opts={}){
+ let el='';
+ if(type==='select')el='<select id="'+id+'">'+opts.items.map(v=>'<option value="'+escapeHtml(v)+'" '+(String(v)===String(value)?'selected':'')+'>'+escapeHtml(v)+'</option>').join('')+'</select>';
+ else if(type==='textarea')el='<textarea id="'+id+'" placeholder="'+escapeHtml(opts.placeholder||'')+'">'+escapeHtml(value||'')+'</textarea>';
+ else el='<input id="'+id+'" type="'+type+'" value="'+escapeHtml(value||'')+'" '+(opts.required?'required':'')+' '+(opts.min!==undefined?'min="'+opts.min+'"':'')+' '+(opts.max!==undefined?'max="'+opts.max+'"':'')+'>';
+ return '<div class="field '+(opts.full?'full':'')+'"><label for="'+id+'">'+label+'</label>'+el+(opts.help?'<div class="helper">'+opts.help+'</div>':'')+'</div>';
+}
+function openPersonForm(person){
+ modalState={type:'person-form',personId:person?person.id:null,deductionId:null};
+ $('modalTitle').textContent=person?'Personeli düzenle':'Yeni personel ekle';$('modalSubtitle').textContent=person?'İsim ve tarih bilgilerini güncelle.':'Ad, işe başlama tarihi ve doğum tarihini gir.';
+ $('modalBody').innerHTML='<div class="fieldgrid">'+field('Adı ve soyadı','personName',person?person.name:'','text',{required:true,full:true})+field('İşe başlama tarihi','personStart',person?person.start:'','date',{required:true})+field('Doğum tarihi (isteğe bağlı)','personBirthday',person?person.birthday:'','date')+'</div><div class="notice">Doğum tarihi girildiğinde doğum gününden bir gün önce ve doğum gününde üst bölümde kırmızı pasta simgeli bildirim gösterilir.</div>';
+ footerButtons([{text:'Vazgeç',action:'close'},{text:person?'Değişiklikleri kaydet':'Personeli ekle',action:'save-person',class:'primary'}]);openModal();setTimeout(()=>$('personName').focus(),30);
+}
+function openInfo(id){
+ const p=people.find(x=>x.id===id);if(!p)return;
+ modalState={type:'info',personId:id,deductionId:null};
+ $('modalTitle').textContent=p.name;$('modalSubtitle').textContent='Personel bilgileri ve kıdem düşüm mazeretleri';
+ const deductions=p.deductions.map(d=>'<div class="deduction"><div class="deductiontop"><div><div class="deductiontitle">'+escapeHtml(d.reason)+'</div><div class="deductionmeta">Kayıt tarihi: '+(d.createdAt?new Intl.DateTimeFormat('tr-TR',{day:'2-digit',month:'2-digit',year:'numeric'}).format(new Date(d.createdAt)):'—')+'</div></div><div class="durationpill">'+durationText(durationDays(d))+'</div></div>'+(d.description?'<div class="deductiondesc">'+escapeHtml(d.description)+'</div>':'')+'<div class="deductiontools"><button class="btn small" data-modal-action="edit-deduction" data-deduction-id="'+d.id+'">'+icon('edit')+' Düzenle</button><button class="btn small danger" data-modal-action="delete-deduction" data-deduction-id="'+d.id+'">'+icon('trash')+' Sil</button></div></div>').join('');
+ $('modalBody').innerHTML='<div class="infochips"><span class="chip">Başlangıç: '+dateText(p.start)+'</span>'+(p.birthday?'<span class="chip">Doğum tarihi: '+dateText(p.birthday)+'</span>':'<span class="chip">Doğum tarihi girilmemiş</span>')+'</div><div class="infochips"><span class="chip">Ham süre: '+durationText(elapsed(p))+'</span><span class="chip">Toplam düşüm: '+durationText(deductionTotal(p))+'</span><span class="chip">Net kıdem: '+durationText(netDays(p))+'</span></div><div class="sectionrow"><h3>Kıdem düşüm mazeretleri ('+p.deductions.length+')</h3><button class="btn primary small" data-modal-action="add-deduction">'+icon('plus')+' Kıdem düş</button></div>'+(deductions||'<div class="empty" style="padding:18px;border:1px dashed var(--line);border-radius:10px">Henüz kıdem düşüm kaydı eklenmemiş.</div>')+'<div class="notice">Ay = 30 gün, yıl = 365 gün olarak hesaplanır. 0 girilen süre alanları sıfır kalır. Her mazeret kaydı ayrı ayrı düzenlenebilir veya silinebilir.</div>';
+ footerButtons([{text:'Kapat',action:'close'},{text:'Personeli düzenle',action:'edit-person',class:'primary'}]);openModal();
+}
+function openDeductionForm(personId,deduction){
+ const p=people.find(x=>x.id===personId);if(!p)return;
+ modalState={type:'deduction-form',personId:personId,deductionId:deduction?deduction.id:null};
+ $('modalTitle').textContent=deduction?'Kıdem düşümünü düzenle':'Kıdem düşümü ekle';$('modalSubtitle').textContent=p.name+' · Süreyi gün cinsinden düşer.';
+ const d=deduction||{reason:'Askerlik',description:'',years:0,months:0,days:0};
+ $('modalBody').innerHTML='<div class="fieldgrid">'+field('Mazeret türü','dedReason',d.reason,'select',{items:['Askerlik','Doğum izni','Ücretsiz izin','Rapor','Ücretsiz/mazeret izni','Diğer'],full:true})+field('Açıklama','dedDescription',d.description,'textarea',{full:true})+field('Yıl','dedYears',String(d.years),'number',{min:0,max:100,help:'1 yıl = 365 gün; 0 girerseniz 0 olarak kaydedilir.'})+field('Ay','dedMonths',String(d.months),'number',{min:0,max:1200,help:'1 ay = 30 gün; 0 girerseniz 0 olarak kaydedilir.'})+field('Gün','dedDays',String(d.days),'number',{min:0,max:36500,help:'Ek gün sayısı.'})+'</div><div class="notice" id="dedPreview">Toplam süre: '+durationText(durationDays(d))+'</div>';
+ ['dedYears','dedMonths','dedDays'].forEach(id=>$(id).addEventListener('input',updateDedPreview));
+ footerButtons([{text:'Vazgeç',action:'back-info'},{text:deduction?'Kaydı güncelle':'Kıdem düşümünü ekle',action:'save-deduction',class:'primary'}]);openModal();
+}
+function updateDedPreview(){const d={years:nonneg($('dedYears').value),months:nonneg($('dedMonths').value),days:nonneg($('dedDays').value)};$('dedPreview').textContent='Toplam süre: '+durationText(durationDays(d))+' ('+durationDays(d)+' gün)'}
+function findPerson(id){return people.find(p=>p.id===id)}
+function handleAction(action,id){
+ const p=findPerson(id);if(action==='info')openInfo(id);
+ else if(action==='edit')openPersonForm(p);
+ else if(action==='delete'){
+  if(!p)return;
+  if(confirm(p.name+' personelini ve bu personele ait tüm kıdem düşüm kayıtlarını silmek istiyor musunuz? Bu işlem geri alınamaz.')){
+   people=people.filter(x=>x.id!==id);save();showToast('Personel silindi.');
+  }
+ }
+}
+function exportData(){
+ const payload={app:'Kıdem - Anestezi ve Reanimasyon',version:1,exportedAt:new Date().toISOString(),people:people};
+ const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob);
+ const a=document.createElement('a');a.href=url;a.download='kidem-yedek-'+dateISO(today())+'.json';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showToast('Yedek dosyası hazırlandı.');
+}
+function importData(file){
+ const reader=new FileReader();
+ reader.onload=()=>{try{
+  const data=JSON.parse(reader.result),rows=Array.isArray(data)?data:data.people;
+  if(!Array.isArray(rows)||!rows.every(p=>p&&typeof p.name==='string'&&typeof p.start==='string'))throw new Error('Geçersiz yedek');
+  if(!confirm('Yedekteki '+rows.length+' personel mevcut listenin yerine yüklensin mi? Mevcut liste yedeğe alınmadıysa geri getirilemez.'))return;
+  people=rows.map(normalizePerson);save();showToast('Yedek başarıyla geri yüklendi.');
+ }catch(e){alert('Yedek okunamadı. Geçerli bir Kıdem JSON dosyası seçin.')}};
+ reader.readAsText(file);
+}
+$('addPersonBtn').addEventListener('click',()=>openPersonForm(null));
+$('exportBtn').addEventListener('click',exportData);
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importData(e.target.files[0]);e.target.value=''});
+['searchInput','sortSelect','filterSelect'].forEach(id=>$(id).addEventListener(id==='searchInput'?'input':'change',render));
+document.addEventListener('click',e=>{
+ const b=e.target.closest('[data-action]');if(b){handleAction(b.dataset.action,b.dataset.id);return}
+ const m=e.target.closest('[data-modal-action]');if(!m)return;
+ const a=m.dataset.modalAction,p=findPerson(modalState.personId),dId=m.dataset.deductionId;
+ if(a==='close')closeModal();
+ if(a==='save-person'){
+  const name=$('personName').value.trim(),start=$('personStart').value,birthday=$('personBirthday').value;
+  if(!name||!start){alert('Ad soyad ve işe başlama tarihi zorunludur.');return}
+  if(!localDate(start)||localDate(start)>today()){alert('İşe başlama tarihi geçerli ve bugün veya daha önce olmalıdır.');return}
+  if(birthday&&!localDate(birthday)){alert('Doğum tarihini kontrol edin.');return}
+  if(modalState.personId){const old=findPerson(modalState.personId);if(old){old.name=name;old.start=start;old.birthday=birthday;save();showToast('Personel bilgileri güncellendi.')}}else{people.push({id:uid(),name,start,birthday,deductions:[]});save();showToast('Yeni personel eklendi.')}
+  closeModal();
+ }
+ if(a==='edit-person'){closeModal();openPersonForm(p)}
+ if(a==='add-deduction')openDeductionForm(modalState.personId,null);
+ if(a==='edit-deduction'){const d=p&&p.deductions.find(x=>x.id===dId);if(d)openDeductionForm(p.id,d)}
+ if(a==='delete-deduction'){
+  if(p&&confirm('Bu kıdem düşüm mazeretini silmek istiyor musunuz?')){
+   p.deductions=p.deductions.filter(x=>x.id!==dId);save();showToast('Kıdem düşüm kaydı silindi.');openInfo(p.id)
+  }
+ }
+ if(a==='back-info')openInfo(modalState.personId);
+ if(a==='save-deduction'){
+  if(!p)return;
+  const values=['dedYears','dedMonths','dedDays'].map(id=>$(id).value.trim());
+  if(values.some(v=>v!==''&&(!/^\d+$/.test(v)||Number(v)<0))){alert('Yıl, ay ve gün alanlarına sıfır veya pozitif tam sayı girin.');return}
+  const data={reason:$('dedReason').value,description:$('dedDescription').value.trim(),years:nonneg(values[0]),months:nonneg(values[1]),days:nonneg(values[2])};
+  if(data.years===0&&data.months===0&&data.days===0){if(!confirm('Süre 0 gün olacak. Bu kaydı yine de kaydetmek istiyor musunuz?'))return}
+  if(modalState.deductionId){const d=p.deductions.find(x=>x.id===modalState.deductionId);if(d)Object.assign(d,data)}else{p.deductions.push({id:uid(),...data,createdAt:new Date().toISOString()})}
+  save();showToast('Kıdem düşüm kaydedildi.');openInfo(p.id);
+ }
+});
+$('closeModal').addEventListener('click',closeModal);
+$('modalBack').addEventListener('click',e=>{if(e.target===$('modalBack'))closeModal()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+})();
+</script>
+</body>
+</html>
