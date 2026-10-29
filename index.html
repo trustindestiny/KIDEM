@@ -408,7 +408,8 @@ function renderBirthdaySchedule(){
  root.innerHTML=out;
 }
 function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
-function closeModal(){ $('modalBack').classList.remove('open');document.body.style.overflow='';modalState={type:null,personId:null,deductionId:null};}
+ function setBackButton(show){$('backModal').classList.toggle('show',!!show)}
+function closeModal(){ $('modalBack').classList.remove('open');document.body.style.overflow='';setBackButton(false);modalState={type:null,personId:null,deductionId:null};}
 function footerButtons(buttons){$('modalFoot').innerHTML=buttons.map(b=>'<button class="btn '+(b.class||'')+'" data-modal-action="'+b.action+'">'+escapeHtml(b.text)+'</button>').join('')}
 function field(label,id,value,type='text',opts={}){
  let el='';
@@ -418,6 +419,7 @@ function field(label,id,value,type='text',opts={}){
  return '<div class="field '+(opts.full?'full':'')+'"><label for="'+id+'">'+label+'</label>'+el+(opts.help?'<div class="helper">'+opts.help+'</div>':'')+'</div>';
 }
 function openPersonForm(person){
+ setBackButton(false);
  modalState={type:'person-form',personId:person?person.id:null,deductionId:null};
  $('modalTitle').textContent=person?'Personeli düzenle':'Yeni personel ekle';$('modalSubtitle').textContent=person?'İsim ve tarih bilgilerini güncelle.':'Ad, işe başlama tarihi ve doğum tarihini gir.';
  $('modalBody').innerHTML='<div class="fieldgrid">'+field('Adı ve soyadı','personName',person?person.name:'','text',{required:true,full:true})+field('İşe başlama tarihi','personStart',person?person.start:'','date',{required:true})+field('Doğum tarihi (isteğe bağlı)','personBirthday',person?person.birthday:'','date')+'</div><div class="notice">Doğum tarihi girildiğinde doğum gününden bir gün önce ve doğum gününde üst bölümde kırmızı pasta simgeli bildirim gösterilir.</div>';
@@ -425,6 +427,7 @@ function openPersonForm(person){
 }
 function openPersonMenu(id){
  const p=findPerson(id);if(!p)return;
+ setBackButton(true);
  modalState={type:'person-menu',personId:id,deductionId:null};
  $('modalTitle').textContent=p.name;
  $('modalSubtitle').textContent=p.archived?'Arşivlenmiş personel kaydı':'Personel işlemleri';
@@ -433,6 +436,7 @@ function openPersonMenu(id){
  footerButtons([{text:'Kapat',action:'close'}]);openModal();
 }
 function openInfo(id){
+ setBackButton(false);
  const p=people.find(x=>x.id===id);if(!p)return;
  modalState={type:'info',personId:id,deductionId:null};
  $('modalTitle').textContent=p.name;$('modalSubtitle').textContent='Personel bilgileri ve kıdem düşüm mazeretleri';
@@ -441,6 +445,7 @@ function openInfo(id){
  footerButtons([{text:'Personeli sil',action:'delete-person',class:'danger'},{text:'Kapat',action:'close'},{text:'Personeli düzenle',action:'edit-person',class:'primary'}]);openModal();
 }
 function openDeductionForm(personId,deduction,returnToAllDeductions=false){
+ setBackButton(false);
  const p=people.find(x=>x.id===personId);if(!p)return;
  modalState={type:'deduction-form',personId:personId,deductionId:deduction?deduction.id:null,returnToAllDeductions};
  $('modalTitle').textContent=deduction?'Kıdem düşümünü düzenle':'Kıdem düşümü ekle';$('modalSubtitle').textContent=p.name+' · Süreyi gün cinsinden düşer.';
@@ -539,6 +544,7 @@ document.addEventListener('click',e=>{
  }
 });
 $('closeModal').addEventListener('click',closeModal);
+ $('backModal').addEventListener('click',closeModal);
 $('modalBack').addEventListener('click',e=>{if(e.target===$('modalBack'))closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
