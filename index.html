@@ -144,13 +144,9 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
   <button class="main-tab active" id="tab-staff" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Tüm Asistan Hekimler</span><span class="tab-count" id="tabStaffCount">17</span></button>
   <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdeme Dahil Olmayan Süreler</span><span class="tab-count" id="tabDeductionCount">0</span></button>
-  <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdayCount">0</span></button>
+  <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Yaş Sıralaması</span></button>
  </nav>
- <section class="birthday" id="birthdayBanner" role="status" aria-live="polite">
-  <div class="birthday-symbol" aria-hidden="true"><svg viewBox="0 0 32 32" width="25" height="25" fill="none" stroke="#c62828" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15h24v13H4z"/><path d="M4 20c3 0 3-2 6-2s3 2 6 2 3-2 6-2 3 2 6 2"/><path d="M9 15V9a2 2 0 0 1 4 0v6m2 0V7a2 2 0 0 1 4 0v8m2 0v-4a2 2 0 0 1 4 0v4"/></svg></div>
-  <div><strong id="birthdayHeading">Doğum günü</strong><div class="names" id="birthdayNames"></div><div class="tomorrow" id="birthdaySub"></div></div>
- </section>
- 
+
  <section class="view-panel active" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
  <section class="panel">
   <div class="panelhead">
@@ -192,7 +188,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  <section class="view-panel" id="view-birthdays" role="tabpanel" aria-labelledby="tab-birthdays" hidden>
   <section class="panel">
    <div class="panelhead">
-    <div><h2 class="paneltitle">Doğum Günleri</h2><div class="subline">Yaklaşan doğum günleri tarihe göre sıralanır. Bu yıl geçmiş olanlar listenin altında yer alır.</div></div>
+    <div><h2 class="paneltitle">Yaş Sıralaması</h2><div class="subline">Kişileri doğum tarihlerine göre yaşça büyükten küçüğe görüntüle.</div></div>
     <div class="actions"><button class="btn small" id="birthdaySortBtn" type="button">Doğum tarihine göre sırala</button></div>
    </div>
    <div class="birthday-schedule" id="birthdaySchedule"></div>
@@ -232,7 +228,7 @@ const seed=[
 ];
 const birthdayDefaults={
  'HİLAL ŞEKER KORUK':'1990-06-10',
- 'BÜŞRA ÖNER AKBALIK':'1996-07-08',
+ 'BÜŞRA ÖNER AKBALIK':'1993-07-08',
  'İPEK KESER BAŞBAYUNDUR':'1994-08-07',
  'MEHMET ŞENYIL':'1996-03-30',
  'ÖKKEŞ BAŞAK':'1993-01-15',
@@ -256,7 +252,7 @@ function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).sli
 function loadData(){
  try{
   const v=JSON.parse(localStorage.getItem(STORE_KEY));
-  if(v&&Array.isArray(v.people))return v.people.map(raw=>{const p=normalizePerson(raw);if(!p.birthday&&birthdayDefaults[p.name])p.birthday=birthdayDefaults[p.name];return p});
+  if(v&&Array.isArray(v.people))return v.people.map(raw=>{const p=normalizePerson(raw);if(p.name==='BÜŞRA ÖNER AKBALIK'&&p.birthday==='1996-07-08')p.birthday='1993-07-08';if(!p.birthday&&birthdayDefaults[p.name])p.birthday=birthdayDefaults[p.name];return p});
  }catch(e){}
  return seed.map(s=>({...s,id:uid(),birthday:birthdayDefaults[s.name]||'',deductions:[]}));
 }
@@ -358,8 +354,6 @@ function render(){
  $('todayLabel').textContent=humanToday();
  $('tabStaffCount').textContent=people.filter(p=>!p.archived).length;
  $('tabDeductionCount').textContent=totalDeductions();
- $('tabBirthdayCount').textContent=people.filter(p=>p.birthday&&!p.archived).length;
- birthdayInfo();
  renderDeductionRegister();
  renderBirthdaySchedule();
  renderArchiveTable();
@@ -368,11 +362,10 @@ function render(){
  $('emptyState').classList.toggle('hidden',list.length>0);
  $('staffTableBody').innerHTML=list.map(p=>{
   const done=countdownDays(p)===0;
-  const birthdayLine=p.birthday?'<span class="birthline">🎁 '+dateText(p.birthday)+'</span>':'';
   const deductionsLine=p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</span>':'';
-  return '<tr><td><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' düzenleme menüsü">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+birthdayLine+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td></tr>'
+  return '<tr><td><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' düzenleme menüsü">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td></tr>'
  }).join('');
- $('mobileList').innerHTML=list.map(p=>{const done=countdownDays(p)===0;return '<article class="personcard"><div class="personcardtop"><div><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+'<div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.birthday?'<span class="birthline">Doğum günü: '+dateText(p.birthday)+'</span>':'')+(p.graduationDate?'<span class="birthline">Mezuniyet: '+dateText(p.graduationDate)+'</span>':'')+'</div></div><div class="personstats"><div class="miniStat"><label>Net kıdem</label><strong>'+durationText(netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong>'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div>'+(p.deductions.length?'<div class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</div>':'')+'</article>'}).join('');
+ $('mobileList').innerHTML=list.map(p=>{const done=countdownDays(p)===0;return '<article class="personcard"><div class="personcardtop"><div><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+'<div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.graduationDate?'<span class="birthline">Mezuniyet: '+dateText(p.graduationDate)+'</span>':'')+'</div></div><div class="personstats"><div class="miniStat"><label>Net kıdem</label><strong>'+durationText(netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong>'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div>'+(p.deductions.length?'<div class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</div>':'')+'</article>'}).join('');
 }
 function updateTopbarHeight(){
  const topbar=document.querySelector('.topbar');
@@ -422,6 +415,8 @@ function renderBirthdaySchedule(){
   root.innerHTML=sorted.length?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>'<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">📅 '+ageOnDate(p.birthday,now)+' yaşında</span></div></div>').join('')+'</section>':'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
   return;
  }
+ root.innerHTML='<div class="empty register-empty">Yaş bilgilerini görmek için “Doğum tarihine göre sırala” seçeneğine bas.</div>';
+ return;
  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
  const entries=people.filter(p=>p.birthday&&!p.archived).map(p=>{
   const birth=localDate(p.birthday);if(!birth)return null;
@@ -621,7 +616,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=17').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=18').catch(()=>{}));
 })();
 </script>
 </body>
