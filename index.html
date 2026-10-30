@@ -141,6 +141,14 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  </div>
 </header>
 <main>
+ <div class="birthday" id="birthdayBanner" role="status" aria-live="polite">
+  <div class="birthday-symbol" aria-hidden="true">🎂</div>
+  <div>
+   <strong id="birthdayHeading">Doğum günü hatırlatmaları</strong>
+   <div class="names" id="birthdayNames"></div>
+   <div class="tomorrow" id="birthdaySub"></div>
+  </div>
+ </div>
  <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
   <button class="main-tab active" id="tab-staff" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Tüm Asistan Hekimler</span><span class="tab-count" id="tabStaffCount">17</span></button>
   <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdeme Dahil Olmayan Süreler</span><span class="tab-count" id="tabDeductionCount">0</span></button>
@@ -352,6 +360,7 @@ function filteredPeople(){
 }
 function render(){
  $('todayLabel').textContent=humanToday();
+ birthdayInfo();
  $('tabStaffCount').textContent=people.filter(p=>!p.archived).length;
  $('tabDeductionCount').textContent=totalDeductions();
  renderDeductionRegister();
@@ -616,7 +625,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=18').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=19').catch(()=>{}));
 })();
 </script>
 </body>
