@@ -170,7 +170,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
    <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option><option value="archived">Arşivlenenler</option></select>
   </div>
   <div class="tablewrap">
-   <table><thead><tr><th>Asistan Hekim</th><th>Başlangıç tarihi</th><th>Net kıdem</th><th>5 yıla kalan</th></tr></thead><tbody id="staffTableBody"></tbody></table>
+   <table><thead><tr><th>Asistan Hekim</th><th>Başlangıç tarihi</th><th id="tenureColumnHeading">Net kıdem</th><th>5 yıla kalan</th></tr></thead><tbody id="staffTableBody"></tbody></table>
   </div>
   <div class="mobile-list" id="mobileList"></div>
   <div class="empty hidden" id="emptyState">Bu filtreye uygun asistan hekim bulunamadı.</div>
@@ -377,12 +377,15 @@ function render(){
  const list=filteredPeople();
  $('resultCount').textContent=list.length+' / '+( $('filterSelect').value==='archived'?people.filter(p=>p.archived).length:people.filter(p=>!p.archived).length)+' asistan hekim';
  $('emptyState').classList.toggle('hidden',list.length>0);
+ const sortMode=$('sortSelect').value;
+ const showingElapsed=sortMode==='start';
+ $('tenureColumnHeading').textContent=showingElapsed?'Geçen Süre':'Net kıdem';
  $('staffTableBody').innerHTML=list.map(p=>{
   const done=countdownDays(p)===0;
   const deductionsLine=p.deductions.length?'<span class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</span>':'';
-  return '<tr><td><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' düzenleme menüsü">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td></tr>'
+  return '<tr><td><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'" aria-label="'+escapeHtml(p.name)+' düzenleme menüsü">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+deductionsLine+'</td><td><span class="startdate">'+dateText(p.start)+'</span></td><td><span class="tenure">'+durationText(showingElapsed?elapsed(p):netDays(p))+'</span></td><td><span class="remaining '+(done?'done':'')+'">'+(done?'5 yıl tamamlandı':durationText(countdownDays(p)))+'</span><span class="target-date">('+targetDate(p)+')</span></td></tr>'
  }).join('');
- $('mobileList').innerHTML=list.map(p=>{const done=countdownDays(p)===0;return '<article class="personcard"><div class="personcardtop"><div><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+'<div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.graduationDate?'<span class="birthline">Mezuniyet: '+dateText(p.graduationDate)+'</span>':'')+'</div></div><div class="personstats"><div class="miniStat"><label>Net kıdem</label><strong>'+durationText(netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong>'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div>'+(p.deductions.length?'<div class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</div>':'')+'</article>'}).join('');
+ $('mobileList').innerHTML=list.map(p=>{const done=countdownDays(p)===0;return '<article class="personcard"><div class="personcardtop"><div><button type="button" class="namecell name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button>'+(p.archived?'<span class="archive-tag">Arşivde</span>':'')+'<div class="startdate">Başlangıç: '+dateText(p.start)+'</div>'+(p.graduationDate?'<span class="birthline">Mezuniyet: '+dateText(p.graduationDate)+'</span>':'')+'</div></div><div class="personstats"><div class="miniStat"><label>'+(showingElapsed?'Geçen Süre':'Net kıdem')+'</label><strong>'+durationText(showingElapsed?elapsed(p):netDays(p))+'</strong></div><div class="miniStat"><label>5 yıla kalan</label><strong>'+(done?'Tamamlandı':durationText(countdownDays(p)))+'</strong></div></div>'+(p.deductions.length?'<div class="subvalue">'+p.deductions.length+' kıdeme dahil olmayan süre kaydı</div>':'')+'</article>'}).join('');
 }
 function updateTopbarHeight(){
  const topbar=document.querySelector('.topbar');
@@ -663,7 +666,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=23').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=24').catch(()=>{}));
 })();
 </script>
 </body>
