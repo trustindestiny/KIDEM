@@ -418,8 +418,8 @@ function renderBirthdaySchedule(){
  const sortButton=$('birthdaySortBtn');
  if(sortButton)sortButton.textContent=birthdayAgeSort?'Normal görünüme dön':'Doğum tarihine göre sırala';
  if(birthdayAgeSort){
-  const sorted=people.filter(p=>p.birthday&&!p.archived&&localDate(p.birthday)).slice().sort((a,b)=>a.birthday.localeCompare(b.birthday)||a.name.localeCompare(b.name,'tr'));
-  root.innerHTML=sorted.length?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>'<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">'+ageOnDate(p.birthday)+' yaşında</span></div></div>').join('')+'</section>':'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
+  const sorted=people.filter(p=>p.birthday&&!p.archived&&localDate(p.birthday)).slice().sort((a,b)=>ageOnDate(b.birthday,now)-ageOnDate(a.birthday,now)||a.birthday.localeCompare(b.birthday)||a.name.localeCompare(b.name,'tr'));
+  root.innerHTML=sorted.length?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>'<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">📅 '+ageOnDate(p.birthday,now)+' yaşında</span></div></div>').join('')+'</section>':'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
   return;
  }
  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
@@ -621,7 +621,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=16').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=17').catch(()=>{}));
 })();
 </script>
 </body>
