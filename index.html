@@ -151,8 +151,8 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  </div>
  <nav class="main-tabs" role="tablist" aria-label="Asistan hekim yönetim bölümleri">
   <button class="main-tab active" id="tab-staff" type="button" role="tab" aria-selected="true" aria-controls="view-staff" data-tab="staff"><span>Tüm Asistan Hekimler</span><span class="tab-count" id="tabStaffCount">17</span></button>
-  <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdeme Dahil Olmayan Süreler</span><span class="tab-count" id="tabDeductionCount">0</span></button>
-  <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span></button>
+  <button class="main-tab" id="tab-deductions" type="button" role="tab" aria-selected="false" aria-controls="view-deductions" data-tab="deductions"><span>Kıdeme Dahil Olmayan Süreler</span></button>
+  <button class="main-tab" id="tab-birthdays" type="button" role="tab" aria-selected="false" aria-controls="view-birthdays" data-tab="birthdays"><span>Doğum Günleri</span><span class="tab-count" id="tabBirthdaysCount">0</span></button>
  </nav>
 
  <section class="view-panel active" id="view-staff" role="tabpanel" aria-labelledby="tab-staff">
@@ -196,8 +196,8 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
  <section class="view-panel" id="view-birthdays" role="tabpanel" aria-labelledby="tab-birthdays" hidden>
   <section class="panel">
    <div class="panelhead">
-    <div><h2 class="paneltitle">Doğum Günleri</h2><div class="subline">Kişileri doğum tarihlerine göre yaşça büyükten küçüğe görüntüle.</div></div>
-    <div class="actions"><span class="chip">Yaşa göre sıralı</span></div>
+    <div><h2 class="paneltitle">Doğum Günleri</h2><div class="subline" id="birthdayPanelSubtitle">Yaklaşan ve geçmiş doğum günleri takvimi.</div></div>
+    <div class="actions"><button class="btn small" id="birthdaySortBtn" type="button">Yaşa Göre Sırala</button></div>
    </div>
    <div class="birthday-schedule" id="birthdaySchedule"></div>
   </section>
@@ -370,7 +370,7 @@ function render(){
  $('todayLabel').textContent=humanToday();
  birthdayInfo();
  $('tabStaffCount').textContent=people.filter(p=>!p.archived).length;
- $('tabDeductionCount').textContent=totalDeductions();
+ $('tabBirthdaysCount').textContent=people.filter(p=>!p.archived&&localDate(p.birthday)).length;
  renderDeductionRegister();
  renderBirthdaySchedule();
  renderArchiveTable();
@@ -401,7 +401,7 @@ function showTab(tabName){
   view.hidden=!active;
  });
  if(tabName==='deductions')renderDeductionRegister();
- if(tabName==='birthdays')renderBirthdaySchedule();
+ if(tabName==='birthdays'){birthdayAgeSort=false;renderBirthdaySchedule();}
  if(tabName==='archive')renderArchiveTable();
 }
 function openAllDeductions(){showTab('deductions')}
@@ -495,7 +495,11 @@ function renderBirthdaySchedule(){
  if(!entries.length){
   calendarHtml='<div class="empty register-empty">Doğum tarihi girilmiş personel yok. Personel bilgisinden doğum tarihi ekleyebilirsin.</div>';
  }
- root.innerHTML=ageHtml+'<div class="birthday-calendar-restored">'+calendarHtml+'</div>';
+ const sortButton=$('birthdaySortBtn');
+ if(sortButton)sortButton.textContent=birthdayAgeSort?'Takvime Dön':'Yaşa Göre Sırala';
+ const subtitle=$('birthdayPanelSubtitle');
+ if(subtitle)subtitle.textContent=birthdayAgeSort?'Doğum tarihi kayıtlı kişiler en yaşlıdan en gence sıralandı.':'Yaklaşan ve geçmiş doğum günleri takvimi.';
+ root.innerHTML=birthdayAgeSort?ageHtml:calendarHtml;
 }
 function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
  function setBackButton(show){$('backModal').classList.toggle('show',!!show)}
@@ -581,6 +585,7 @@ function importData(file){
 }
 $('addPersonBtn').addEventListener('click',()=>openPersonForm(null));
 document.querySelectorAll('.main-tab').forEach(tab=>tab.addEventListener('click',()=>showTab(tab.dataset.tab)));
+$('birthdaySortBtn').addEventListener('click',()=>{birthdayAgeSort=!birthdayAgeSort;renderBirthdaySchedule()});
 $('exportBtn').addEventListener('click',exportData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importData(e.target.files[0]);e.target.value=''});
@@ -658,7 +663,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=22').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=23').catch(()=>{}));
 })();
 </script>
 </body>
