@@ -80,6 +80,13 @@ main{padding-bottom:calc(28px + env(safe-area-inset-bottom,0px))}
 .past-birthdays{margin-top:28px;padding-top:21px;border-top:2px dashed #cddbe1;background:linear-gradient(180deg,#f7fafb 0%,#fff 54px);border-radius:10px}
 .past-birthdays .birthday-list-heading{color:#6a7e88}
 .past-birthdays .birthday-person-main{color:#5c707b}
+.birthday-age-list{padding-top:8px;padding-bottom:8px}
+.birthday-age-person{padding:7px 12px;border-bottom:1px solid var(--line);line-height:1.25}
+.birthday-age-person:last-child{border-bottom:0}
+.birthday-age-name .name-link{font-size:12px;font-weight:700}
+.birthday-age-meta{display:flex;align-items:center;gap:12px;margin-top:3px;color:var(--muted);font-size:10px;line-height:1.25;white-space:nowrap}
+.birthday-age-value{font-variant-numeric:tabular-nums}
+@media(max-width:760px){.birthday-age-person{padding:6px 9px}.birthday-age-name .name-link{font-size:11px}.birthday-age-meta{font-size:10px;gap:10px;margin-top:2px}.panelhead .actions .btn.small{font-size:9px;padding:6px 7px;white-space:normal;max-width:116px;line-height:1.2}}
 @media(max-width:760px){
  .topbar{padding-left:10px;padding-right:10px;padding-bottom:10px}
  .brand{gap:8px}.brandicon{width:34px;height:34px;border-radius:10px}.brandicon svg{width:24px;height:24px}.brand h1{font-size:15px}.brand p{font-size:9px}.datebadge{font-size:8px;max-width:76px}
@@ -186,6 +193,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
   <section class="panel">
    <div class="panelhead">
     <div><h2 class="paneltitle">Doğum Günleri</h2><div class="subline">Yaklaşan doğum günleri tarihe göre sıralanır. Bu yıl geçmiş olanlar listenin altında yer alır.</div></div>
+    <div class="actions"><button class="btn small" id="birthdaySortBtn" type="button">Doğum tarihine göre sırala</button></div>
    </div>
    <div class="birthday-schedule" id="birthdaySchedule"></div>
   </section>
@@ -222,14 +230,35 @@ const seed=[
  {name:'MERVE YILDIRIM',start:'2025-08-18'},
  {name:'ÇAĞLA CAN',start:'2025-12-22'}
 ];
+const birthdayDefaults={
+ 'HİLAL ŞEKER KORUK':'1990-06-10',
+ 'BÜŞRA ÖNER AKBALIK':'1996-07-08',
+ 'İPEK KESER BAŞBAYUNDUR':'1994-08-07',
+ 'MEHMET ŞENYIL':'1996-03-30',
+ 'ÖKKEŞ BAŞAK':'1993-01-15',
+ 'AYŞE ÇİÇEK':'1991-08-14',
+ 'ANIL BİÇER':'1995-03-09',
+ 'ELİF BEYZA KÜÇÜKÇİNGÖZ':'1995-03-10',
+ 'ÇİÇEK PINAR AKGÜL':'1993-02-13',
+ 'CEMRE VAR':'1996-09-23',
+ 'İHSAN YÜKSEL':'1995-06-29',
+ 'GÖKHAN SADULLAH KARATAŞ':'1998-06-19',
+ 'DAMLA ALKHALDI':'1998-08-24',
+ 'İBRAHİM HALİL İPEK':'1995-02-12',
+ 'NAİL BURAK CAN KARAMAN':'1996-06-12'
+};
 const $=id=>document.getElementById(id);
 let people=loadData();
 let modalState={type:null,personId:null,deductionId:null};
 let toastTimer=null;
+let birthdayAgeSort=false;
 function uid(){return 'p'+Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
 function loadData(){
- try{const v=JSON.parse(localStorage.getItem(STORE_KEY));if(v&&Array.isArray(v.people))return v.people.map(normalizePerson)}catch(e){}
- return seed.map(s=>({...s,id:uid(),birthday:'',deductions:[]}));
+ try{
+  const v=JSON.parse(localStorage.getItem(STORE_KEY));
+  if(v&&Array.isArray(v.people))return v.people.map(raw=>{const p=normalizePerson(raw);if(!p.birthday&&birthdayDefaults[p.name])p.birthday=birthdayDefaults[p.name];return p});
+ }catch(e){}
+ return seed.map(s=>({...s,id:uid(),birthday:birthdayDefaults[s.name]||'',deductions:[]}));
 }
 function normalizePerson(p){return {id:p.id||uid(),name:String(p.name||''),start:String(p.start||''),birthday:String(p.birthday||''),graduationDate:String(p.graduationDate||''),archived:!!p.archived,deductions:Array.isArray(p.deductions)?p.deductions.map(d=>({id:d.id||uid(),reason:String(d.reason||'Diğer'),description:String(d.description||''),years:nonneg(d.years),months:nonneg(d.months),days:nonneg(d.days),createdAt:d.createdAt||new Date().toISOString()})):[]}}
 function nonneg(v){const n=Number(v);return Number.isFinite(n)&&n>0?Math.floor(n):0}
@@ -377,9 +406,22 @@ function renderDeductionRegister(){
  root.innerHTML=html||'<div class="empty register-empty">Henüz kıdem düşüm kaydı bulunmuyor.</div>';
  $('deductionRegisterCount').textContent=totalDeductions()+' kayıt · '+groups.length+' asistan hekim';
 }
+function ageOnDate(iso,reference=today()){
+ const birth=localDate(iso);if(!birth)return null;
+ let age=reference.getFullYear()-birth.getFullYear();
+ if(reference.getMonth()<birth.getMonth()||(reference.getMonth()===birth.getMonth()&&reference.getDate()<birth.getDate()))age--;
+ return age;
+}
 function renderBirthdaySchedule(){
  const root=$('birthdaySchedule');if(!root)return;
  const now=today(),year=now.getFullYear();
+ const sortButton=$('birthdaySortBtn');
+ if(sortButton)sortButton.textContent=birthdayAgeSort?'Normal görünüme dön':'Doğum tarihine göre sırala';
+ if(birthdayAgeSort){
+  const sorted=people.filter(p=>p.birthday&&!p.archived&&localDate(p.birthday)).slice().sort((a,b)=>a.birthday.localeCompare(b.birthday)||a.name.localeCompare(b.name,'tr'));
+  root.innerHTML=sorted.length?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>'<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">'+ageOnDate(p.birthday)+' yaşında</span></div></div>').join('')+'</section>':'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
+  return;
+ }
  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
  const entries=people.filter(p=>p.birthday&&!p.archived).map(p=>{
   const birth=localDate(p.birthday);if(!birth)return null;
@@ -506,6 +548,7 @@ $('exportBtn').addEventListener('click',exportData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',e=>{if(e.target.files&&e.target.files[0])importData(e.target.files[0]);e.target.value=''});
 ['sortSelect','filterSelect'].forEach(id=>$(id).addEventListener('change',render));
+$('birthdaySortBtn').addEventListener('click',()=>{birthdayAgeSort=!birthdayAgeSort;renderBirthdaySchedule()});
 document.addEventListener('click',e=>{
  const b=e.target.closest('[data-action]');if(b){handleAction(b.dataset.action,b.dataset.id);return}
  const m=e.target.closest('[data-modal-action]');if(!m)return;
@@ -578,7 +621,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=14').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=15').catch(()=>{}));
 })();
 </script>
 </body>
