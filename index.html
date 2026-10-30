@@ -162,7 +162,7 @@ thead th:nth-child(4),tbody td:nth-child(4){padding-left:6px!important;padding-r
    </div>
   </div>
   <div class="searchrow">
-   <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="birthday">Doğum günü yaklaşanlar</option><option value="name">İsim (A → Z)</option></select>
+   <select id="sortSelect" aria-label="Sıralama"><option value="net" selected>Net kıdem (yüksek → düşük)</option><option value="start">Başlama tarihi (eski → yeni)</option><option value="name">İsim (A → Z)</option></select>
    <select id="filterSelect" aria-label="Filtre"><option value="all">Tüm asistan hekimler</option><option value="active">5 yıl dolmamış</option><option value="complete">5 yıl tamamlanmış</option><option value="deductions">Kıdeme dahil olmayan süre kaydı olanlar</option><option value="archived">Arşivlenenler</option></select>
   </div>
   <div class="tablewrap">
@@ -351,7 +351,7 @@ function filteredPeople(){
   const done=countdownDays(p)===0;
   return filter==='all'||(filter==='active'&&!done)||(filter==='complete'&&done)||(filter==='deductions'&&p.deductions.length);
  });
- a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='birthday'?((nextBirthdayDate(x)?.getTime()??Infinity)-(nextBirthdayDate(y)?.getTime()??Infinity))||x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
+ a.sort((x,y)=>sort==='name'?x.name.localeCompare(y.name,'tr'):sort==='net'?netDays(y)-netDays(x):x.start.localeCompare(y.start)||x.name.localeCompare(y.name,'tr'));
  return a
 }
 function render(){
@@ -621,7 +621,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=15').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=16').catch(()=>{}));
 })();
 </script>
 </body>
