@@ -425,34 +425,76 @@ function ageOnDate(iso,reference=today()){
 function renderBirthdaySchedule(){
  const root=$('birthdaySchedule');if(!root)return;
  const now=today(),year=now.getFullYear();
- const sorted=people.filter(p=>p.birthday&&!p.archived&&localDate(p.birthday)).slice().sort((a,b)=>ageOnDate(b.birthday,now)-ageOnDate(a.birthday,now)||a.birthday.localeCompare(b.birthday)||a.name.localeCompare(b.name,'tr'));
- const ageHtml=sorted.length?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>'<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">📅 '+ageOnDate(p.birthday,now)+' yaşında</span></div></div>').join('')+'</section>':'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
+
+ // Yaş sıralaması: en yaşlıdan en gence.
+ const sorted=people.filter(p=>p.birthday&&!p.archived&&localDate(p.birthday)).slice().sort((a,b)=>
+  ageOnDate(b.birthday,now)-ageOnDate(a.birthday,now)||
+  a.birthday.localeCompare(b.birthday)||
+  a.name.localeCompare(b.name,'tr')
+ );
+ const ageHtml=sorted.length
+  ?'<section class="birthday-list-section birthday-age-list">'+sorted.map(p=>
+    '<div class="birthday-age-person"><div class="birthday-age-name"><button type="button" class="name-link" data-action="menu" data-id="'+p.id+'">'+escapeHtml(p.name)+'</button></div><div class="birthday-age-meta"><span>🎁 '+dateText(p.birthday)+'</span><span class="birthday-age-value">📅 '+ageOnDate(p.birthday,now)+' yaşında</span></div></div>'
+   ).join('')+'</section>'
+  :'<div class="empty register-empty">Doğum tarihi girilmiş personel yok.</div>';
+
  const months=['Ocak','Şubat','Mart','Nisan','Mayıs','Haziran','Temmuz','Ağustos','Eylül','Ekim','Kasım','Aralık'];
+
+ // Her doğum gününü içinde bulunulan takvim yılına yerleştir.
  const entries=people.filter(p=>p.birthday&&!p.archived).map(p=>{
-  const birth=localDate(p.birthday);if(!birth)return null;
+  const birth=localDate(p.birthday);
+  if(!birth)return null;
   let due=new Date(year,birth.getMonth(),birth.getDate(),12);
+  // 29 Şubat doğumluları artık yıl olmayan yıllarda 28 Şubat'ta göster.
   if(birth.getMonth()===1&&birth.getDate()===29&&due.getMonth()!==1)due=new Date(year,1,28,12);
   return {person:p,birth,due};
  }).filter(Boolean);
- const upcoming=entries.filter(e=>dayDiff(now,e.due)>=0).sort((a,b)=>a.due-b.due||a.person.name.localeCompare(b.person.name,'tr'));
- const past=entries.filter(e=>dayDiff(now,e.due)<0).sort((a,b)=>a.due-b.due||a.person.name.localeCompare(b.person.name,'tr'));
+
+ // Bugün ve sonrası yaklaşan; bugünden öncesi geçmiş doğum günüdür.
+ const upcoming=entries.filter(e=>dayDiff(now,e.due)>=0).sort((a,b)=>
+  a.due-b.due||a.person.name.localeCompare(b.person.name,'tr')
+ );
+ const past=entries.filter(e=>dayDiff(now,e.due)<0).sort((a,b)=>
+  a.due-b.due||a.person.name.localeCompare(b.person.name,'tr')
+ );
+
  function relative(e){
   const days=dayDiff(now,e.due);
-  return days===0?'Bugün':days===1?'Yarın':days===7?'1 hafta sonra':days+' gün sonra';
+  if(days===0)return 'Bugün';
+  if(days===1)return 'Yarın';
+  if(days===7)return '1 hafta sonra';
+  return days+' gün sonra';
  }
  function grouped(list,showRelative){
   const byMonth=new Map();
-  list.forEach(e=>{const month=e.due.getMonth();if(!byMonth.has(month))byMonth.set(month,[]);byMonth.get(month).push(e)});
-  return [...byMonth.entries()].map(([month,items])=>{
-   const names=items.map(e=>'<div class="birthday-person"><div class="birthday-person-main"><button type="button" class="name-link" data-action="menu" data-id="'+e.person.id+'">'+escapeHtml(e.person.name)+'</button> <span>('+dateText(e.person.birthday)+')</span></div>'+(showRelative?'<span class="birthday-relative '+(dayDiff(now,e.due)===0?'today':'')+'">'+relative(e)+'</span>':'')+'</div>').join('');
+  list.forEach(e=>{
+   const month=e.due.getMonth();
+   if(!byMonth.has(month))byMonth.set(month,[]);
+   byMonth.get(month).push(e);
+  });
+  return [...byMonth.entries()].sort((a,b)=>a[0]-b[0]).map(([month,items])=>{
+   items.sort((a,b)=>a.due-b.due||a.person.name.localeCompare(b.person.name,'tr'));
+   const names=items.map(e=>
+    '<div class="birthday-person"><div class="birthday-person-main"><button type="button" class="name-link" data-action="menu" data-id="'+e.person.id+'">'+escapeHtml(e.person.name)+'</button> <span>('+dateText(e.person.birthday)+')</span></div>'+
+    (showRelative?'<span class="birthday-relative '+(dayDiff(now,e.due)===0?'today':'')+'">'+relative(e)+'</span>':'')+
+    '</div>'
+   ).join('');
    return '<div class="month-row"><div class="month-label">'+months[month]+'</div><div class="month-people">'+names+'</div></div>';
   }).join('');
  }
+
  let calendarHtml='';
- if(upcoming.length)calendarHtml+='<section class="birthday-list-section"><h3 class="birthday-list-heading"><span>Yaklaşan doğum günleri</span><span class="section-count">'+upcoming.length+'</span></h3><div class="month-list">'+grouped(upcoming,true)+'</div></section>';
- else calendarHtml+='<section class="birthday-list-section"><h3 class="birthday-list-heading">Yaklaşan doğum günleri</h3><div class="empty register-empty">Bu yıl kalan doğum günü yok.</div></section>';
- if(past.length)calendarHtml+='<section class="birthday-list-section past-birthdays"><h3 class="birthday-list-heading"><span>Bu yıl doğum günü geçmiş olanlar</span><span class="section-count">'+past.length+'</span></h3><div class="month-list">'+grouped(past,false)+'</div></section>';
- if(!entries.length)calendarHtml='<div class="empty register-empty">Doğum tarihi girilmiş personel yok. Personel bilgisinden doğum tarihi ekleyebilirsin.</div>';
+ if(upcoming.length){
+  calendarHtml+='<section class="birthday-list-section"><h3 class="birthday-list-heading"><span>Yaklaşan doğum günleri</span><span class="section-count">'+upcoming.length+'</span></h3><div class="month-list">'+grouped(upcoming,true)+'</div></section>';
+ }else{
+  calendarHtml+='<section class="birthday-list-section"><h3 class="birthday-list-heading">Yaklaşan doğum günleri</h3><div class="empty register-empty">Bu yıl kalan doğum günü yok.</div></section>';
+ }
+ if(past.length){
+  calendarHtml+='<section class="birthday-list-section past-birthdays"><h3 class="birthday-list-heading"><span>Bu yıl doğum günü geçmiş olanlar</span><span class="section-count">'+past.length+'</span></h3><div class="month-list">'+grouped(past,false)+'</div></section>';
+ }
+ if(!entries.length){
+  calendarHtml='<div class="empty register-empty">Doğum tarihi girilmiş personel yok. Personel bilgisinden doğum tarihi ekleyebilirsin.</div>';
+ }
  root.innerHTML=ageHtml+'<div class="birthday-calendar-restored">'+calendarHtml+'</div>';
 }
 function openModal(){ $('modalBack').classList.add('open');document.body.style.overflow='hidden';}
@@ -616,7 +658,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 render();
 updateTopbarHeight();
 window.addEventListener('resize',updateTopbarHeight);
-if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=21').catch(()=>{}));
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=22').catch(()=>{}));
 })();
 </script>
 </body>
